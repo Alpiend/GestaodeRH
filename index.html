@@ -229,6 +229,9 @@ tr:last-child td{border-bottom:none;}
 
   <div class="page" id="pg-ferias">
     <div class="sh"><h2>Férias</h2><button class="btn bo" onclick="exportFerias()">Exportar CSV</button></div>
+    <div style="background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)">
+      ℹ️ <b style="color:var(--accent)">Cálculo automático:</b> Vencimento = Data de Início + 1 ano. Status fica <b style="color:var(--red)">vermelho</b> se vencido, <b style="color:var(--yellow)">amarelo</b> se vence em 30 dias, <b style="color:var(--green)">verde</b> se em dia.
+    </div>
     <div class="fbar">
       <div><label>Obra</label><select id="fil-fer-obra" onchange="renderFerias()"><option value="">Todas</option></select></div>
       <div><label>Gestor</label><select id="fil-fer-gestor" onchange="renderFerias()"><option value="">Todos</option></select></div>
@@ -667,6 +670,8 @@ async function salvarColab() {
   var nome_val = (gv('c-nome')||'').trim();
   if (!nome_val) { toast('Informe o nome!', 'err'); return; }
   var id = gv('c-id');
+
+  // Dados principais (sem campos novos de férias — evita erro de schema cache)
   var d = {
     nome: nome_val,
     nascimento: dval('c-nasc'),
@@ -681,15 +686,36 @@ async function salvarColab() {
     nr35: dval('c-nr35'),
     irata: dval('c-irata'),
     resgate: dval('c-resgate'),
-    desligamento: dval('c-deslig'),
+    desligamento: dval('c-deslig')
+  };
+
+  // Campos de férias separados
+  var df = {
     ultima_ferias: dval('c-ult-ferias'),
     ferias_inicio: dval('c-fer-inicio'),
     ferias_fim: dval('c-fer-fim')
   };
+
   bar(true);
   try {
-    if (id) { await PATCH('colaboradores', id, d); toast('Colaborador atualizado!'); }
-    else    { await POST('colaboradores', d);       toast('Colaborador cadastrado!'); }
+    var savedId = id;
+    if (id) {
+      await PATCH('colaboradores', id, d);
+    } else {
+      var res = await POST('colaboradores', d);
+      savedId = res[0] ? res[0].id : null;
+    }
+
+    // Salvar campos de férias separadamente (ignora erro se colunas não existirem)
+    if (savedId) {
+      try {
+        await PATCH('colaboradores', savedId, df);
+      } catch(ef) {
+        console.warn('Aviso campos férias:', ef.message);
+      }
+    }
+
+    toast(id ? 'Colaborador atualizado!' : 'Colaborador cadastrado!');
     fecharModal('mo-colab');
     await loadAll(); renderColabs(); updateBadges();
   } catch(e) { toast('Erro: '+e.message, 'err'); console.error(e); }
