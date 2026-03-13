@@ -223,6 +223,26 @@ tr:last-child td { border-bottom:none; }
 
 .email-preview { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:16px; font-size:13px; color:var(--text2); line-height:1.6; margin-top:12px; }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+<style>
+.flatpickr-calendar { background:var(--bg2) !important; border:1px solid var(--border) !important; border-radius:12px !important; box-shadow:0 8px 32px rgba(0,0,0,0.4) !important; }
+.flatpickr-day { color:var(--text2) !important; border-radius:6px !important; }
+.flatpickr-day:hover { background:var(--bg3) !important; color:var(--text) !important; }
+.flatpickr-day.selected, .flatpickr-day.selected:hover { background:var(--accent) !important; border-color:var(--accent) !important; color:#fff !important; }
+.flatpickr-day.today { border-color:var(--accent) !important; }
+.flatpickr-months { background:var(--bg3) !important; border-radius:12px 12px 0 0 !important; }
+.flatpickr-month { color:var(--text) !important; }
+.flatpickr-current-month { color:var(--text) !important; }
+.flatpickr-current-month .flatpickr-monthDropdown-months { background:var(--bg3) !important; color:var(--text) !important; }
+.flatpickr-current-month input.cur-year { color:var(--text) !important; }
+.flatpickr-weekday { color:var(--text3) !important; }
+.flatpickr-prev-month svg, .flatpickr-next-month svg { fill:var(--text2) !important; }
+.flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg { fill:var(--accent) !important; }
+.numInputWrapper:hover { background:var(--bg3) !important; }
+.flatpickr-time input { background:var(--bg3) !important; color:var(--text) !important; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/pt.js"></script>
 </head>
 <body>
 
@@ -405,7 +425,7 @@ tr:last-child td { border-bottom:none; }
           <thead>
             <tr>
               <th>Nome</th><th>Função</th><th>Obra</th><th>Gestor</th>
-              <th>ASO</th><th>Início</th><th>Status</th><th>Ações</th>
+              <th>ASO</th><th>Início</th><th>Últ. Férias</th><th>Status</th><th>Ações</th>
             </tr>
           </thead>
           <tbody id="tbody-colabs"></tbody>
@@ -629,14 +649,19 @@ tr:last-child td { border-bottom:none; }
   <div class="page" id="page-alertas">
     <div class="section-header">
       <h2>Alertas & Envio de E-mail</h2>
-      <button class="btn btn-primary" onclick="sendAllAlerts()">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-        Enviar Todos os Alertas
-      </button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" onclick="sendAllAlerts('email')">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          Enviar Tudo por E-mail
+        </button>
+        <button class="btn btn-sm" style="background:#25d366;color:#fff" onclick="sendAllAlerts('whats')">
+          💬 Enviar Tudo pelo WhatsApp
+        </button>
+      </div>
     </div>
 
     <div class="card" style="margin-bottom:20px">
-      <div class="card-title">Configuração de E-mail RH</div>
+      <div class="card-title">Configuração de Alertas</div>
       <div class="form-grid">
         <div class="form-group">
           <label>E-mail do RH</label>
@@ -645,6 +670,14 @@ tr:last-child td { border-bottom:none; }
         <div class="form-group">
           <label>Nome do RH</label>
           <input type="text" id="nome-rh" placeholder="Setor de RH" />
+        </div>
+        <div class="form-group">
+          <label>WhatsApp do RH (com DDD)</label>
+          <input type="text" id="whats-rh" placeholder="5511999999999" />
+          <span style="font-size:11px;color:var(--text3);margin-top:4px">Formato: 55 + DDD + número (ex: 5511999999999)</span>
+        </div>
+        <div class="form-group" style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-outline btn-sm" onclick="saveAlertConfig()" style="height:38px">💾 Salvar Configurações</button>
         </div>
       </div>
     </div>
@@ -656,9 +689,10 @@ tr:last-child td { border-bottom:none; }
           Certificados Vencendo
         </div>
         <div id="alert-cert-list" class="alert-list"></div>
-        <button class="btn btn-danger btn-sm" style="margin-top:12px;width:100%" onclick="sendAlertEmail('cert')">
-          Enviar Alerta Certificados
-        </button>
+        <div style="display:flex;gap:6px;margin-top:12px">
+          <button class="btn btn-danger btn-sm" style="flex:1" onclick="sendAlertEmail('cert')">📧 E-mail</button>
+          <button class="btn btn-sm" style="flex:1;background:#25d366;color:#fff" onclick="sendAlertWhats('cert')">💬 WhatsApp</button>
+        </div>
       </div>
       <div class="card">
         <div class="card-title" style="color:var(--yellow)">
@@ -666,9 +700,10 @@ tr:last-child td { border-bottom:none; }
           ASO Vencendo
         </div>
         <div id="alert-aso-list" class="alert-list"></div>
-        <button class="btn btn-sm" style="margin-top:12px;width:100%;background:var(--yellow);color:#000" onclick="sendAlertEmail('aso')">
-          Enviar Alerta ASO
-        </button>
+        <div style="display:flex;gap:6px;margin-top:12px">
+          <button class="btn btn-sm" style="flex:1;background:var(--yellow);color:#000" onclick="sendAlertEmail('aso')">📧 E-mail</button>
+          <button class="btn btn-sm" style="flex:1;background:#25d366;color:#fff" onclick="sendAlertWhats('aso')">💬 WhatsApp</button>
+        </div>
       </div>
       <div class="card">
         <div class="card-title" style="color:var(--accent)">
@@ -676,9 +711,10 @@ tr:last-child td { border-bottom:none; }
           Férias Vencendo
         </div>
         <div id="alert-ferias-list" class="alert-list"></div>
-        <button class="btn btn-primary btn-sm" style="margin-top:12px;width:100%" onclick="sendAlertEmail('ferias')">
-          Enviar Alerta Férias
-        </button>
+        <div style="display:flex;gap:6px;margin-top:12px">
+          <button class="btn btn-primary btn-sm" style="flex:1" onclick="sendAlertEmail('ferias')">📧 E-mail</button>
+          <button class="btn btn-sm" style="flex:1;background:#25d366;color:#fff" onclick="sendAlertWhats('ferias')">💬 WhatsApp</button>
+        </div>
       </div>
     </div>
   </div>
@@ -707,7 +743,7 @@ tr:last-child td { border-bottom:none; }
         </div>
         <div class="form-group">
           <label>CPF</label>
-          <input type="text" id="colab-cpf" placeholder="000.000.000-00"/>
+          <input type="text" id="colab-cpf" placeholder="000.000.000-00" oninput="maskCPF(this)" maxlength="14"/>
         </div>
         <div class="form-group form-full">
           <label>Endereço Completo</label>
@@ -765,6 +801,10 @@ tr:last-child td { border-bottom:none; }
         <div class="form-group">
           <label>Data de Desligamento</label>
           <input type="date" id="colab-desligamento"/>
+        </div>
+        <div class="form-group">
+          <label>Data Última Férias</label>
+          <input type="date" id="colab-ultima-ferias"/>
         </div>
       </div>
     </div>
@@ -1034,7 +1074,7 @@ async function loadAll() {
       inicio:c.inicio, funcaoId:c.funcao_id, obraId:c.obra_id,
       asoData:c.aso_data, asoValid:c.aso_valid,
       nr33:c.nr33, nr35:c.nr35, irata:c.irata, resgate:c.resgate,
-      desligamento:c.desligamento
+      desligamento:c.desligamento, ultimaFerias:c.ultima_ferias
     }));
     state.epis = epis.map(e => ({ id:e.id, colabId:e.colab_id, nome:e.nome, data:e.data, qtd:e.qtd, obs:e.obs }));
   } catch(e) {
@@ -1248,6 +1288,7 @@ async function saveColaborador() {
       irata: document.getElementById('colab-irata').value || null,
       resgate: document.getElementById('colab-resgate').value || null,
       desligamento: document.getElementById('colab-desligamento').value || null,
+      ultima_ferias: document.getElementById('colab-ultima-ferias').value || null,
     };
     if (existingId) { await sbUpdate('colaboradores', existingId, dbData); showToast('Colaborador atualizado!'); }
     else { await sbInsert('colaboradores', dbData); showToast('Colaborador cadastrado!'); }
@@ -1384,6 +1425,7 @@ function editColab(id) {
   document.getElementById('colab-irata').value = c.irata || '';
   document.getElementById('colab-resgate').value = c.resgate || '';
   document.getElementById('colab-desligamento').value = c.desligamento || '';
+  document.getElementById('colab-ultima-ferias').value = c.ultimaFerias || '';
   document.getElementById('modal-colab-title').textContent = 'Editar Colaborador';
   document.getElementById('modal-colaborador').classList.add('open');
 }
@@ -1418,6 +1460,7 @@ function renderColabs() {
       <td>${getGestorByObra(c.obraId)}</td>
       <td><span class="status ${asoClass}">${asoTxt}</span></td>
       <td>${fmt(c.inicio)}</td>
+      <td>${c.ultimaFerias ? fmt(c.ultimaFerias) : '<span style="color:var(--text3)">—</span>'}</td>
       <td><span class="pill pill-green">Ativo</span></td>
       <td class="action-btns">
         <button class="btn btn-outline btn-sm" onclick="editColab('${c.id}')">Editar</button>
@@ -1776,50 +1819,118 @@ function getFeriasAlerts() {
 // =====================
 // EMAIL ALERTS
 // =====================
-function buildEmailBody(type) {
-  const emailRH = document.getElementById('email-rh').value || 'rh@empresa.com';
-  const nomeRH = document.getElementById('nome-rh').value || 'Setor de RH';
-  let subject = '', body = '', items = [];
+// =====================
+// CPF MASK
+// =====================
+function maskCPF(input) {
+  let v = input.value.replace(/\D/g, '').slice(0, 11);
+  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+  input.value = v;
+}
 
-  if (type === 'cert') {
-    items = getCertAlerts();
-    subject = `⚠️ Alerta: Certificações vencendo — ${new Date().toLocaleDateString('pt-BR')}`;
-    body = `Prezado(a) ${nomeRH},\n\nOs seguintes certificados estão vencidos ou vencem nos próximos 30 dias:\n\n${items.map(i => `• ${i.name}: ${i.detail}`).join('\n')}\n\nPor favor, tome as providências necessárias.\n\nAtenciosamente,\nSistema RHPro`;
-  } else if (type === 'aso') {
-    items = getAsoAlerts();
-    subject = `🏥 Alerta: ASO vencendo — ${new Date().toLocaleDateString('pt-BR')}`;
-    body = `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm ASO vencido ou vencendo nos próximos 30 dias:\n\n${items.map(i => `• ${i.name}: ${i.detail}`).join('\n')}\n\nPor favor, agende os exames necessários.\n\nAtenciosamente,\nSistema RHPro`;
-  } else if (type === 'ferias') {
-    items = getFeriasAlerts();
-    subject = `🏖️ Alerta: Férias vencendo — ${new Date().toLocaleDateString('pt-BR')}`;
-    body = `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm férias vencidas ou vencendo nos próximos 30 dias:\n\n${items.map(i => `• ${i.name}: ${i.detail}`).join('\n')}\n\nPor favor, programe as férias com antecedência.\n\nAtenciosamente,\nSistema RHPro`;
-  }
-  return { subject, body, to: emailRH, items };
+// =====================
+// ALERT CONFIG SAVE
+// =====================
+function saveAlertConfig() {
+  const email = document.getElementById('email-rh').value;
+  const nome = document.getElementById('nome-rh').value;
+  const whats = document.getElementById('whats-rh').value;
+  try {
+    localStorage.setItem('rh_email', email);
+    localStorage.setItem('rh_nome', nome);
+    localStorage.setItem('rh_whats', whats);
+    showToast('Configurações salvas!');
+  } catch(e) { showToast('Configurações salvas na sessão', 'info'); }
+}
+
+function loadAlertConfig() {
+  try {
+    const email = localStorage.getItem('rh_email');
+    const nome = localStorage.getItem('rh_nome');
+    const whats = localStorage.getItem('rh_whats');
+    if (email) document.getElementById('email-rh').value = email;
+    if (nome) document.getElementById('nome-rh').value = nome;
+    if (whats) document.getElementById('whats-rh').value = whats;
+  } catch(e) {}
+}
+
+// =====================
+// EMAIL & WHATSAPP ALERTS
+// =====================
+function getAlertItems(type) {
+  if (type === 'cert') return getCertAlerts();
+  if (type === 'aso') return getAsoAlerts();
+  if (type === 'ferias') return getFeriasAlerts();
+  return [];
+}
+
+function getAlertTexts(type) {
+  const nomeRH = document.getElementById('nome-rh').value || 'Setor de RH';
+  const date = new Date().toLocaleDateString('pt-BR');
+  const items = getAlertItems(type);
+  const list = items.map(i => `• ${i.name}: ${i.detail}`).join('\n');
+  if (type === 'cert') return {
+    subject: `⚠️ Alerta: Certificações vencendo — ${date}`,
+    body: `Prezado(a) ${nomeRH},\n\nOs seguintes certificados estão vencidos ou vencem nos próximos 30 dias:\n\n${list}\n\nPor favor, tome as providências necessárias.\n\nAtenciosamente,\nAlpiend RH`,
+    items
+  };
+  if (type === 'aso') return {
+    subject: `🏥 Alerta: ASO vencendo — ${date}`,
+    body: `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm ASO vencido ou vencendo nos próximos 30 dias:\n\n${list}\n\nPor favor, agende os exames necessários.\n\nAtenciosamente,\nAlpiend RH`,
+    items
+  };
+  if (type === 'ferias') return {
+    subject: `🏖️ Alerta: Férias vencendo — ${date}`,
+    body: `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm férias vencidas ou vencendo nos próximos 30 dias:\n\n${list}\n\nPor favor, programe as férias com antecedência.\n\nAtenciosamente,\nAlpiend RH`,
+    items
+  };
+  return { subject:'', body:'', items:[] };
 }
 
 function sendAlertEmail(type) {
-  const { subject, body, to, items } = buildEmailBody(type);
+  const emailRH = document.getElementById('email-rh').value;
+  if (!emailRH) { showToast('Configure o e-mail do RH primeiro!', 'error'); showPage('alertas'); return; }
+  const { subject, body, items } = getAlertTexts(type);
   if (!items.length) { showToast('Nenhum alerta para enviar', 'info'); return; }
-  document.getElementById('email-preview-to').value = to;
+  document.getElementById('email-preview-to').value = emailRH;
   document.getElementById('email-preview-subject').value = subject;
   document.getElementById('email-preview-body').textContent = body;
-  const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const mailto = `mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   document.getElementById('email-mailto-btn').href = mailto;
   openModal('modal-email');
 }
 
-function sendAllAlerts() {
+function sendAlertWhats(type) {
+  const whatsRH = document.getElementById('whats-rh').value.replace(/\D/g,'');
+  if (!whatsRH) { showToast('Configure o WhatsApp do RH primeiro!', 'error'); return; }
+  const { body, items } = getAlertTexts(type);
+  if (!items.length) { showToast('Nenhum alerta para enviar', 'info'); return; }
+  const url = `https://wa.me/${whatsRH}?text=${encodeURIComponent(body)}`;
+  window.open(url, '_blank');
+}
+
+function sendAllAlerts(canal) {
   const allItems = [...getCertAlerts(), ...getAsoAlerts(), ...getFeriasAlerts()];
   if (!allItems.length) { showToast('Nenhum alerta pendente!', 'info'); return; }
-  const emailRH = document.getElementById('email-rh').value || 'rh@empresa.com';
+  const nomeRH = document.getElementById('nome-rh').value || 'Setor de RH';
   const subject = `📋 Relatório de Alertas RH — ${new Date().toLocaleDateString('pt-BR')}`;
-  const body = `Relatório de alertas RH:\n\n${allItems.map(i=>`• ${i.name}: ${i.detail}`).join('\n')}`;
-  document.getElementById('email-preview-to').value = emailRH;
-  document.getElementById('email-preview-subject').value = subject;
-  document.getElementById('email-preview-body').textContent = body;
-  const mailto = `mailto:${emailRH}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('email-mailto-btn').href = mailto;
-  openModal('modal-email');
+  const body = `Relatório de Alertas — Alpiend RH\n\n${allItems.map(i=>`• ${i.name}: ${i.detail}`).join('\n')}\n\nAtenciosamente,\nAlpiend RH`;
+  if (canal === 'email') {
+    const emailRH = document.getElementById('email-rh').value;
+    if (!emailRH) { showToast('Configure o e-mail do RH primeiro!', 'error'); return; }
+    document.getElementById('email-preview-to').value = emailRH;
+    document.getElementById('email-preview-subject').value = subject;
+    document.getElementById('email-preview-body').textContent = body;
+    const mailto = `mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    document.getElementById('email-mailto-btn').href = mailto;
+    openModal('modal-email');
+  } else {
+    const whatsRH = document.getElementById('whats-rh').value.replace(/\D/g,'');
+    if (!whatsRH) { showToast('Configure o WhatsApp do RH primeiro!', 'error'); return; }
+    window.open(`https://wa.me/${whatsRH}?text=${encodeURIComponent(body)}`, '_blank');
+  }
 }
 
 // =====================
@@ -1960,12 +2071,37 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
 });
 
+// Init flatpickr on all date inputs
+function initDatePickers() {
+  document.querySelectorAll('input[type="date"]').forEach(el => {
+    el.type = 'text';
+    el.placeholder = 'DD/MM/AAAA';
+    flatpickr(el, {
+      locale: 'pt',
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'd/m/Y',
+      allowInput: true,
+      disableMobile: true,
+    });
+  });
+}
+
+// Re-init date pickers when modal opens
+const _origOpenModal = openModal;
+function openModal(id) {
+  _origOpenModal(id);
+  setTimeout(initDatePickers, 50);
+}
+
 // Carrega do Supabase e renderiza
 (async () => {
+  loadAlertConfig();
   await loadAll();
   populateSelects();
   renderDashboard();
   updateBadges();
+  initDatePickers();
 })();
 </script>
 </body>
