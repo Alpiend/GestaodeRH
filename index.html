@@ -7,252 +7,154 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0f1e;
-  --bg2: #111827;
-  --bg3: #1a2235;
-  --card: #162032;
-  --border: #1e3050;
-  --accent: #0ea5e9;
-  --accent2: #38bdf8;
-  --green: #22c55e;
-  --yellow: #f59e0b;
-  --red: #ef4444;
-  --orange: #f97316;
-  --purple: #a855f7;
-  --text: #e2e8f0;
-  --text2: #94a3b8;
-  --text3: #64748b;
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --bg:#0a0f1e; --bg2:#111827; --bg3:#1a2235; --card:#162032; --border:#1e3050;
+  --accent:#0ea5e9; --accent2:#38bdf8; --green:#22c55e; --yellow:#f59e0b;
+  --red:#ef4444; --orange:#f97316; --purple:#a855f7;
+  --text:#e2e8f0; --text2:#94a3b8; --text3:#64748b;
+  --font-head:'Syne',sans-serif; --font-body:'DM Sans',sans-serif;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden; }
-
-/* SIDEBAR */
-.sidebar {
-  position:fixed; left:0; top:0; bottom:0; width:240px;
-  background:var(--bg2); border-right:1px solid var(--border);
-  display:flex; flex-direction:column; z-index:100; overflow-y:auto;
-}
-.logo { padding:28px 24px 20px; border-bottom:1px solid var(--border); }
-.logo h1 { font-family:var(--font-head); font-size:18px; font-weight:800; color:#fff; letter-spacing:-0.5px; }
-.logo span { color:var(--accent); }
-.logo p { font-size:11px; color:var(--text3); margin-top:4px; }
-.nav { padding:16px 0; flex:1; }
-.nav-section { padding:8px 16px 4px; font-size:10px; font-weight:600; color:var(--text3); letter-spacing:1px; text-transform:uppercase; }
-.nav-item { display:flex; align-items:center; gap:10px; padding:10px 20px; cursor:pointer; font-size:13px; color:var(--text2); transition:all 0.2s; border-left:3px solid transparent; }
-.nav-item:hover { background:var(--bg3); color:var(--text); }
-.nav-item.active { background:rgba(14,165,233,0.1); color:var(--accent); border-left-color:var(--accent); }
-.nav-item svg { width:16px; height:16px; flex-shrink:0; }
-.badge { margin-left:auto; background:var(--red); color:#fff; border-radius:10px; font-size:10px; padding:1px 6px; }
-.badge-yellow { background:var(--yellow); color:#000; }
-
-/* MAIN */
-.main { margin-left:240px; min-height:100vh; padding:0 0 40px; }
-.topbar { height:60px; background:var(--bg2); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 28px; position:sticky; top:0; z-index:50; }
-.page-title { font-family:var(--font-head); font-size:15px; font-weight:700; color:#fff; }
-.topbar-right { display:flex; align-items:center; gap:16px; }
-.btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; border:none; transition:all 0.2s; }
-.btn-primary { background:var(--accent); color:#fff; }
-.btn-primary:hover { background:var(--accent2); }
-.btn-outline { background:transparent; color:var(--text2); border:1px solid var(--border); }
-.btn-outline:hover { border-color:var(--accent); color:var(--accent); }
-.btn-danger { background:var(--red); color:#fff; }
-.btn-success { background:var(--green); color:#fff; }
-.btn-sm { padding:5px 12px; font-size:12px; }
-
-/* PAGES */
-.page { display:none; padding:28px; }
-.page.active { display:block; }
-
-/* CARDS */
-.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
-.card-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:#fff; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
-.card-title svg { color:var(--accent); }
-
-/* KPI GRID */
-.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
-.kpi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; position:relative; overflow:hidden; }
-.kpi-card::before { content:''; position:absolute; top:0; right:0; width:80px; height:80px; border-radius:50%; opacity:0.06; }
-.kpi-card.blue::before { background:var(--accent); }
-.kpi-card.green::before { background:var(--green); }
-.kpi-card.yellow::before { background:var(--yellow); }
-.kpi-card.red::before { background:var(--red); }
-.kpi-label { font-size:11px; color:var(--text3); font-weight:500; text-transform:uppercase; letter-spacing:0.5px; }
-.kpi-value { font-family:var(--font-head); font-size:36px; font-weight:800; color:#fff; margin:6px 0 2px; line-height:1; }
-.kpi-sub { font-size:12px; color:var(--text2); }
-.kpi-icon { position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; }
-.kpi-icon.blue { background:rgba(14,165,233,0.15); color:var(--accent); }
-.kpi-icon.green { background:rgba(34,197,94,0.15); color:var(--green); }
-.kpi-icon.yellow { background:rgba(245,158,11,0.15); color:var(--yellow); }
-.kpi-icon.red { background:rgba(239,68,68,0.15); color:var(--red); }
-
-/* TABLE */
-.table-wrap { overflow-x:auto; }
-table { width:100%; border-collapse:collapse; font-size:13px; }
-th { text-align:left; padding:10px 12px; font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid var(--border); white-space:nowrap; }
-td { padding:11px 12px; border-bottom:1px solid rgba(30,48,80,0.5); color:var(--text2); vertical-align:middle; }
-tr:hover td { background:rgba(14,165,233,0.03); }
-tr:last-child td { border-bottom:none; }
-
-/* STATUS BADGES */
-.status { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
-.status::before { content:''; width:6px; height:6px; border-radius:50%; }
-.status-green { background:rgba(34,197,94,0.15); color:var(--green); }
-.status-green::before { background:var(--green); }
-.status-yellow { background:rgba(245,158,11,0.15); color:var(--yellow); }
-.status-yellow::before { background:var(--yellow); }
-.status-red { background:rgba(239,68,68,0.15); color:var(--red); }
-.status-red::before { background:var(--red); }
-.status-blue { background:rgba(14,165,233,0.15); color:var(--accent); }
-.status-blue::before { background:var(--accent); }
-
-/* FORM */
-.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
-.form-group { display:flex; flex-direction:column; gap:6px; }
-.form-group label { font-size:12px; font-weight:500; color:var(--text2); }
-.form-group input, .form-group select, .form-group textarea {
-  background:var(--bg3); border:1px solid var(--border); border-radius:8px;
-  padding:9px 12px; color:var(--text); font-size:13px; font-family:var(--font-body);
-  transition:border 0.2s; outline:none;
-}
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--accent); }
-.form-group select option { background:var(--bg3); }
-.form-full { grid-column:1/-1; }
-
-/* MODAL */
-.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
-.modal-overlay.open { display:flex; }
-.modal { background:var(--bg2); border:1px solid var(--border); border-radius:16px; width:90%; max-width:760px; max-height:90vh; overflow-y:auto; }
-.modal-header { padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
-.modal-header h2 { font-family:var(--font-head); font-size:16px; font-weight:700; color:#fff; }
-.modal-close { background:none; border:none; color:var(--text3); cursor:pointer; font-size:20px; line-height:1; }
-.modal-body { padding:24px; }
-.modal-footer { padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:10px; }
-
-/* SECTION HEADER */
-.section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
-.section-header h2 { font-family:var(--font-head); font-size:20px; font-weight:800; color:#fff; }
-
-/* SEARCH BAR */
-.search-bar { display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
-.search-input { flex:1; min-width:200px; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:9px 12px; color:var(--text); font-size:13px; outline:none; }
-.search-input:focus { border-color:var(--accent); }
-
-/* ALERT PANEL */
-.alert-list { display:flex; flex-direction:column; gap:10px; }
-.alert-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; font-size:13px; }
-.alert-item.red { background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); }
-.alert-item.yellow { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.2); }
-.alert-item.blue { background:rgba(14,165,233,0.1); border:1px solid rgba(14,165,233,0.2); }
-.alert-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.alert-dot.red { background:var(--red); }
-.alert-dot.yellow { background:var(--yellow); }
-.alert-dot.blue { background:var(--accent); }
-
-/* TABS */
-.tabs { display:flex; gap:2px; background:var(--bg3); border-radius:10px; padding:4px; margin-bottom:20px; width:fit-content; }
-.tab { padding:7px 16px; border-radius:7px; font-size:13px; cursor:pointer; color:var(--text3); transition:all 0.2s; }
-.tab.active { background:var(--card); color:var(--text); box-shadow:0 1px 4px rgba(0,0,0,0.3); }
-
-/* EPI TABLE */
-.epi-quarter { display:flex; gap:6px; flex-wrap:wrap; }
-.epi-badge { padding:3px 8px; border-radius:5px; font-size:11px; font-weight:600; }
-
-/* CHART BAR */
-.chart-bar-wrap { display:flex; flex-direction:column; gap:10px; }
-.chart-row { display:flex; align-items:center; gap:12px; font-size:13px; }
-.chart-row .label { width:120px; color:var(--text2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; }
-.chart-row .bar-bg { flex:1; background:var(--bg3); border-radius:4px; height:10px; }
-.chart-row .bar-fill { height:10px; border-radius:4px; background:var(--accent); transition:width 0.8s ease; }
-.chart-row .bar-fill.green { background:var(--green); }
-.chart-row .bar-fill.yellow { background:var(--yellow); }
-.chart-row .val { width:36px; text-align:right; font-weight:600; color:var(--text); font-size:12px; }
-
-/* GRID LAYOUT */
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
-
-/* TOAST */
-.toast-container { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
-.toast { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px; font-size:13px; color:#fff; animation:slideIn 0.3s ease; max-width:320px; box-shadow:0 8px 24px rgba(0,0,0,0.4); }
-.toast.success { background:#166534; border:1px solid var(--green); }
-.toast.error { background:#7f1d1d; border:1px solid var(--red); }
-.toast.info { background:#0c4a6e; border:1px solid var(--accent); }
-@keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
-
-/* PILL */
-.pill { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
-.pill-blue { background:rgba(14,165,233,0.15); color:var(--accent); }
-.pill-purple { background:rgba(168,85,247,0.15); color:var(--purple); }
-.pill-green { background:rgba(34,197,94,0.15); color:var(--green); }
-.pill-orange { background:rgba(249,115,22,0.15); color:var(--orange); }
-
-/* ACTION BTNS */
-.action-btns { display:flex; gap:6px; }
-
-/* REPORT FILTERS */
-.filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; padding:16px; background:var(--bg3); border-radius:10px; border:1px solid var(--border); }
-.filter-bar label { font-size:12px; color:var(--text2); margin-bottom:4px; display:block; }
-.filter-group { display:flex; flex-direction:column; }
-.filter-group select, .filter-group input { background:var(--card); border:1px solid var(--border); border-radius:7px; padding:7px 10px; color:var(--text); font-size:13px; outline:none; min-width:150px; }
-
-/* EMPTY STATE */
-.empty-state { text-align:center; padding:48px 20px; color:var(--text3); }
-.empty-state svg { width:48px; height:48px; margin:0 auto 12px; opacity:0.3; display:block; }
-
-/* RESPONSIVE */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-height:100vh;overflow-x:hidden;}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;overflow-y:auto;}
+.logo{padding:20px 24px;border-bottom:1px solid var(--border);}
+.logo h1{font-family:var(--font-head);font-size:15px;font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:2px;}
+.logo p{font-size:10px;color:var(--text3);}
+.nav{padding:16px 0;flex:1;}
+.nav-section{padding:8px 16px 4px;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.2s;border-left:3px solid transparent;}
+.nav-item:hover{background:var(--bg3);color:var(--text);}
+.nav-item.active{background:rgba(14,165,233,0.1);color:var(--accent);border-left-color:var(--accent);}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;}
+.badge{margin-left:auto;background:var(--red);color:#fff;border-radius:10px;font-size:10px;padding:1px 6px;}
+.badge-yellow{background:var(--yellow);color:#000;}
+.main{margin-left:240px;min-height:100vh;padding:0 0 40px;}
+.topbar{height:60px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50;}
+.page-title{font-family:var(--font-head);font-size:15px;font-weight:700;color:#fff;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:var(--red);color:#fff;}
+.btn-success{background:var(--green);color:#fff;}
+.btn-sm{padding:5px 12px;font-size:12px;}
+.page{display:none;padding:28px;}
+.page.active{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.card-title{font-family:var(--font-head);font-size:14px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;opacity:0.06;}
+.kpi-card.blue::before{background:var(--accent);} .kpi-card.green::before{background:var(--green);}
+.kpi-card.yellow::before{background:var(--yellow);} .kpi-card.red::before{background:var(--red);}
+.kpi-label{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+.kpi-value{font-family:var(--font-head);font-size:36px;font-weight:800;color:#fff;margin:6px 0 2px;line-height:1;}
+.kpi-sub{font-size:12px;color:var(--text2);}
+.kpi-icon{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.kpi-icon.blue{background:rgba(14,165,233,0.15);color:var(--accent);}
+.kpi-icon.green{background:rgba(34,197,94,0.15);color:var(--green);}
+.kpi-icon.yellow{background:rgba(245,158,11,0.15);color:var(--yellow);}
+.kpi-icon.red{background:rgba(239,68,68,0.15);color:var(--red);}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:10px 12px;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);white-space:nowrap;}
+td{padding:11px 12px;border-bottom:1px solid rgba(30,48,80,0.5);color:var(--text2);vertical-align:middle;}
+tr:hover td{background:rgba(14,165,233,0.03);}
+tr:last-child td{border-bottom:none;}
+.status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;}
+.status-green{background:rgba(34,197,94,0.15);color:var(--green);} .status-green::before{background:var(--green);}
+.status-yellow{background:rgba(245,158,11,0.15);color:var(--yellow);} .status-yellow::before{background:var(--yellow);}
+.status-red{background:rgba(239,68,68,0.15);color:var(--red);} .status-red::before{background:var(--red);}
+.status-blue{background:rgba(14,165,233,0.15);color:var(--accent);} .status-blue::before{background:var(--accent);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:12px;font-weight:500;color:var(--text2);}
+.form-group input,.form-group select,.form-group textarea{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:var(--font-body);transition:border 0.2s;outline:none;}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent);}
+.form-group select option{background:var(--bg3);}
+.form-full{grid-column:1/-1;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:90%;max-width:780px;max-height:90vh;overflow-y:auto;}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-header h2{font-family:var(--font-head);font-size:16px;font-weight:700;color:#fff;}
+.modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;line-height:1;}
+.modal-body{padding:24px;}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.section-header h2{font-family:var(--font-head);font-size:20px;font-weight:800;color:#fff;}
+.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.search-input{flex:1;min-width:200px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;}
+.search-input:focus{border-color:var(--accent);}
+.alert-list{display:flex;flex-direction:column;gap:10px;}
+.alert-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;font-size:13px;}
+.alert-item.red{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);}
+.alert-item.yellow{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);}
+.alert-item.blue{background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2);}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.alert-dot.red{background:var(--red);} .alert-dot.yellow{background:var(--yellow);} .alert-dot.blue{background:var(--accent);}
+.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content;}
+.tab{padding:7px 16px;border-radius:7px;font-size:13px;cursor:pointer;color:var(--text3);transition:all 0.2s;}
+.tab.active{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.3);}
+.chart-bar-wrap{display:flex;flex-direction:column;gap:10px;}
+.chart-row{display:flex;align-items:center;gap:12px;font-size:13px;}
+.chart-row .label{width:120px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;}
+.chart-row .bar-bg{flex:1;background:var(--bg3);border-radius:4px;height:10px;}
+.chart-row .bar-fill{height:10px;border-radius:4px;background:var(--accent);transition:width 0.8s ease;}
+.chart-row .bar-fill.green{background:var(--green);} .chart-row .bar-fill.yellow{background:var(--yellow);}
+.chart-row .val{width:36px;text-align:right;font-weight:600;color:var(--text);font-size:12px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;font-size:13px;color:#fff;animation:slideIn 0.3s ease;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,0.4);}
+.toast.success{background:#166534;border:1px solid var(--green);}
+.toast.error{background:#7f1d1d;border:1px solid var(--red);}
+.toast.info{background:#0c4a6e;border:1px solid var(--accent);}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.pill-blue{background:rgba(14,165,233,0.15);color:var(--accent);}
+.pill-purple{background:rgba(168,85,247,0.15);color:var(--purple);}
+.pill-green{background:rgba(34,197,94,0.15);color:var(--green);}
+.pill-orange{background:rgba(249,115,22,0.15);color:var(--orange);}
+.action-btns{display:flex;gap:6px;}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;padding:16px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);}
+.filter-bar label{font-size:12px;color:var(--text2);margin-bottom:4px;display:block;}
+.filter-group{display:flex;flex-direction:column;}
+.filter-group select,.filter-group input{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;outline:none;min-width:150px;}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
+.progress-ring{position:relative;width:80px;height:80px;}
+.progress-ring svg{transform:rotate(-90deg);}
+.progress-ring .bg{fill:none;stroke:var(--bg3);stroke-width:8;}
+.progress-ring .fg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s ease;}
+.progress-ring .label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:16px;color:#fff;}
+.email-preview{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;color:var(--text2);line-height:1.6;margin-top:12px;white-space:pre-wrap;}
+.section-divider{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin:20px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+/* DATE INPUT STYLED */
+.date-input-wrap{position:relative;}
+.date-input-wrap input[type=date]{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:var(--font-body);outline:none;cursor:pointer;}
+.date-input-wrap input[type=date]:focus{border-color:var(--accent);}
+.date-input-wrap input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7);cursor:pointer;}
 @media(max-width:900px){
   .sidebar{width:60px;}
-  .sidebar .logo p, .sidebar .nav-item span, .sidebar .nav-section,.badge{display:none;}
+  .sidebar .logo p,.sidebar .nav-item span,.sidebar .nav-section,.badge{display:none;}
   .main{margin-left:60px;}
   .kpi-grid{grid-template-columns:1fr 1fr;}
   .grid-2,.grid-3{grid-template-columns:1fr;}
   .form-grid,.form-grid-3{grid-template-columns:1fr;}
 }
-
-/* PROGRESS RING */
-.progress-ring { position:relative; width:80px; height:80px; }
-.progress-ring svg { transform:rotate(-90deg); }
-.progress-ring .bg { fill:none; stroke:var(--bg3); stroke-width:8; }
-.progress-ring .fg { fill:none; stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset 1s ease; }
-.progress-ring .label { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-weight:700; font-size:16px; color:#fff; }
-
-/* EMAIL MODAL */
-
-.email-preview { background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:16px; font-size:13px; color:var(--text2); line-height:1.6; margin-top:12px; }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
-<style>
-.flatpickr-calendar { background:var(--bg2) !important; border:1px solid var(--border) !important; border-radius:12px !important; box-shadow:0 8px 32px rgba(0,0,0,0.4) !important; }
-.flatpickr-day { color:var(--text2) !important; border-radius:6px !important; }
-.flatpickr-day:hover { background:var(--bg3) !important; color:var(--text) !important; }
-.flatpickr-day.selected, .flatpickr-day.selected:hover { background:var(--accent) !important; border-color:var(--accent) !important; color:#fff !important; }
-.flatpickr-day.today { border-color:var(--accent) !important; }
-.flatpickr-months { background:var(--bg3) !important; border-radius:12px 12px 0 0 !important; }
-.flatpickr-month { color:var(--text) !important; }
-.flatpickr-current-month { color:var(--text) !important; }
-.flatpickr-current-month .flatpickr-monthDropdown-months { background:var(--bg3) !important; color:var(--text) !important; }
-.flatpickr-current-month input.cur-year { color:var(--text) !important; }
-.flatpickr-weekday { color:var(--text3) !important; }
-.flatpickr-prev-month svg, .flatpickr-next-month svg { fill:var(--text2) !important; }
-.flatpickr-prev-month:hover svg, .flatpickr-next-month:hover svg { fill:var(--accent) !important; }
-.numInputWrapper:hover { background:var(--bg3) !important; }
-.flatpickr-time input { background:var(--bg3) !important; color:var(--text) !important; }
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/pt.js"></script>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="logo">
-    <div style="background:#fff;border-radius:10px;padding:8px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)">
-      <img src="data:image/png;base64,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" alt="Alpiend" style="width:44px;height:44px;object-fit:contain;display:block"/>
+    <div style="background:#fff;border-radius:10px;padding:7px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.3)">
+      <img src="data:image/png;base64,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" alt="Alpiend" style="width:42px;height:42px;object-fit:contain;display:block"/>
     </div>
-    <h1 style="font-size:14px">ALPIEND</h1>
+    <h1>ALPIEND</h1>
     <p>Gestão de Recursos Humanos</p>
   </div>
   <nav class="nav">
@@ -306,388 +208,169 @@ tr:last-child td { border-bottom:none; }
     <div class="nav-section">Alertas</div>
     <div class="nav-item" onclick="showPage('alertas')">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      <span>Alertas & E-mail</span>
+      <span>Alertas & Envio</span>
       <span class="badge" id="badge-alert">0</span>
     </div>
   </nav>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
   <div class="topbar">
     <div class="page-title" id="page-title">Dashboard</div>
     <div class="topbar-right">
       <span style="font-size:12px;color:var(--text3)" id="current-date"></span>
-      <button class="btn btn-primary" id="topbar-btn" onclick="topbarAction()">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Novo
-      </button>
+      <button class="btn btn-primary" id="topbar-btn" onclick="topbarAction()" style="display:none">+ Novo</button>
     </div>
   </div>
 
   <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
     <div class="kpi-grid">
-      <div class="kpi-card blue">
-        <div class="kpi-icon blue"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <div class="kpi-label">Total Colaboradores</div>
-        <div class="kpi-value" id="kpi-total">0</div>
-        <div class="kpi-sub">Ativos</div>
-      </div>
-      <div class="kpi-card green">
-        <div class="kpi-icon green"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <div class="kpi-label">Obras Ativas</div>
-        <div class="kpi-value" id="kpi-obras">0</div>
-        <div class="kpi-sub">Em andamento</div>
-      </div>
-      <div class="kpi-card yellow">
-        <div class="kpi-icon yellow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-        <div class="kpi-label">Alertas Pendentes</div>
-        <div class="kpi-value" id="kpi-alertas">0</div>
-        <div class="kpi-sub">Requerem atenção</div>
-      </div>
-      <div class="kpi-card red">
-        <div class="kpi-icon red"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-        <div class="kpi-label">Cert. Vencidas/Vencer</div>
-        <div class="kpi-value" id="kpi-cert">0</div>
-        <div class="kpi-sub">Próximos 30 dias</div>
-      </div>
+      <div class="kpi-card blue"><div class="kpi-icon blue"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="kpi-label">Colaboradores Ativos</div><div class="kpi-value" id="kpi-total">0</div><div class="kpi-sub">Cadastrados</div></div>
+      <div class="kpi-card green"><div class="kpi-icon green"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><div class="kpi-label">Obras Ativas</div><div class="kpi-value" id="kpi-obras">0</div><div class="kpi-sub">Em andamento</div></div>
+      <div class="kpi-card yellow"><div class="kpi-icon yellow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div><div class="kpi-label">Alertas Pendentes</div><div class="kpi-value" id="kpi-alertas">0</div><div class="kpi-sub">Requerem atenção</div></div>
+      <div class="kpi-card red"><div class="kpi-icon red"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div><div class="kpi-label">Cert. Vencidas/Vencer</div><div class="kpi-value" id="kpi-cert">0</div><div class="kpi-sub">Próximos 30 dias</div></div>
     </div>
-
     <div class="grid-2" style="margin-bottom:20px">
-      <div class="card">
-        <div class="card-title">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
-          Alertas Críticos
-        </div>
-        <div class="alert-list" id="dash-alerts">
-          <div class="empty-state" style="padding:20px"><p>Sem alertas no momento ✓</p></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Colaboradores por Obra
-        </div>
-        <div class="chart-bar-wrap" id="chart-obras"></div>
-      </div>
+      <div class="card"><div class="card-title">Alertas Críticos</div><div class="alert-list" id="dash-alerts"><div class="empty-state" style="padding:20px"><p>Sem alertas ✓</p></div></div></div>
+      <div class="card"><div class="card-title">Colaboradores por Obra</div><div class="chart-bar-wrap" id="chart-obras"></div></div>
     </div>
-
     <div class="grid-3">
-      <div class="card">
-        <div class="card-title">Taxa de Rotatividade</div>
+      <div class="card"><div class="card-title">Taxa de Rotatividade</div>
         <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-          <div class="progress-ring">
-            <svg viewBox="0 0 80 80" width="80" height="80">
-              <circle class="bg" cx="40" cy="40" r="32"/>
-              <circle class="fg" cx="40" cy="40" r="32" stroke="var(--accent)" id="ring-fg" stroke-dasharray="201" stroke-dashoffset="201"/>
-            </svg>
-            <div class="label" id="ring-label">0%</div>
-          </div>
-          <div>
-            <div style="font-size:12px;color:var(--text3);margin-bottom:6px">Admissões vs Desligamentos</div>
-            <div style="font-size:13px;color:var(--text2)">Admissões: <strong id="stat-adm" style="color:var(--green)">0</strong></div>
-            <div style="font-size:13px;color:var(--text2)">Desligamentos: <strong id="stat-desl" style="color:var(--red)">0</strong></div>
-          </div>
+          <div class="progress-ring"><svg viewBox="0 0 80 80" width="80" height="80"><circle class="bg" cx="40" cy="40" r="32"/><circle class="fg" cx="40" cy="40" r="32" stroke="var(--accent)" id="ring-fg" stroke-dasharray="201" stroke-dashoffset="201"/></svg><div class="label" id="ring-label">0%</div></div>
+          <div><div style="font-size:12px;color:var(--text3);margin-bottom:6px">Admissões vs Desligamentos</div><div style="font-size:13px;color:var(--text2)">Admissões: <strong id="stat-adm" style="color:var(--green)">0</strong></div><div style="font-size:13px;color:var(--text2)">Desligamentos: <strong id="stat-desl" style="color:var(--red)">0</strong></div></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Status ASO</div>
-        <div id="aso-status-chart" class="chart-bar-wrap"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Próximas Férias</div>
-        <div id="prox-ferias" style="font-size:13px;color:var(--text2)">
-          <div class="empty-state" style="padding:10px"><p>Sem férias previstas</p></div>
-        </div>
-      </div>
+      <div class="card"><div class="card-title">Status ASO</div><div id="aso-status-chart" class="chart-bar-wrap"></div></div>
+      <div class="card"><div class="card-title">Próximas Férias</div><div id="prox-ferias"><div class="empty-state" style="padding:10px"><p>Sem férias previstas</p></div></div></div>
     </div>
   </div>
 
   <!-- COLABORADORES -->
   <div class="page" id="page-colaboradores">
-    <div class="section-header">
-      <h2>Colaboradores</h2>
-      <button class="btn btn-primary" onclick="openModal('modal-colaborador')">+ Novo Colaborador</button>
-    </div>
+    <div class="section-header"><h2>Colaboradores</h2><button class="btn btn-primary" onclick="openModal('modal-colaborador');resetColabForm()">+ Novo Colaborador</button></div>
     <div class="search-bar">
-      <input class="search-input" placeholder="Buscar por nome, função ou obra..." oninput="filterColabs(this.value)" />
-      <select class="search-input" style="max-width:160px" onchange="filterColabsObra(this.value)" id="filter-obra-colab">
-        <option value="">Todas as Obras</option>
-      </select>
-      <select class="search-input" style="max-width:160px" onchange="filterColabsGestor(this.value)" id="filter-gestor-colab">
-        <option value="">Todos os Gestores</option>
-      </select>
+      <input class="search-input" placeholder="Buscar por nome, função..." oninput="filterColabs(this.value)"/>
+      <select class="search-input" style="max-width:180px" onchange="filterColabsObra(this.value)" id="filter-obra-colab"><option value="">Todas as Obras</option></select>
+      <select class="search-input" style="max-width:180px" onchange="filterColabsGestor(this.value)" id="filter-gestor-colab"><option value="">Todos os Gestores</option></select>
     </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th><th>Função</th><th>Obra</th><th>Gestor</th>
-              <th>ASO</th><th>Início</th><th>Últ. Férias</th><th>Status</th><th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="tbody-colabs"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Nome</th><th>CPF</th><th>Função</th><th>Obra</th><th>Gestor</th><th>ASO</th><th>Início</th><th>Últ. Férias</th><th>Ações</th></tr></thead>
+      <tbody id="tbody-colabs"></tbody>
+    </table></div></div>
   </div>
 
   <!-- OBRAS -->
   <div class="page" id="page-obras">
-    <div class="section-header">
-      <h2>Obras</h2>
-      <button class="btn btn-primary" onclick="openModal('modal-obra')">+ Nova Obra</button>
-    </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Nome da Obra</th><th>Endereço</th><th>Gestor</th><th>Status</th><th>Colaboradores</th><th>Ações</th></tr></thead>
-          <tbody id="tbody-obras"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="section-header"><h2>Obras</h2><button class="btn btn-primary" onclick="openModal('modal-obra');resetObraForm()">+ Nova Obra</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Nome</th><th>Endereço</th><th>Gestor</th><th>Status</th><th>Colaboradores</th><th>Ações</th></tr></thead>
+      <tbody id="tbody-obras"></tbody>
+    </table></div></div>
   </div>
 
   <!-- GESTORES -->
   <div class="page" id="page-gestores">
-    <div class="section-header">
-      <h2>Gestores</h2>
-      <button class="btn btn-primary" onclick="openModal('modal-gestor')">+ Novo Gestor</button>
-    </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Obras</th><th>Ações</th></tr></thead>
-          <tbody id="tbody-gestores"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="section-header"><h2>Gestores</h2><button class="btn btn-primary" onclick="openModal('modal-gestor');resetGestorForm()">+ Novo Gestor</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Obras</th><th>Ações</th></tr></thead>
+      <tbody id="tbody-gestores"></tbody>
+    </table></div></div>
   </div>
 
   <!-- FUNÇÕES -->
   <div class="page" id="page-funcoes">
-    <div class="section-header">
-      <h2>Funções</h2>
-      <button class="btn btn-primary" onclick="openModal('modal-funcao')">+ Nova Função</button>
-    </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Função</th><th>Descrição</th><th>NRs Obrigatórias</th><th>Ações</th></tr></thead>
-          <tbody id="tbody-funcoes"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="section-header"><h2>Funções</h2><button class="btn btn-primary" onclick="openModal('modal-funcao');resetFuncaoForm()">+ Nova Função</button></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Função</th><th>Descrição</th><th>NRs Obrigatórias</th><th>Ações</th></tr></thead>
+      <tbody id="tbody-funcoes"></tbody>
+    </table></div></div>
   </div>
 
   <!-- CERTIFICADOS -->
   <div class="page" id="page-certificados">
-    <div class="section-header">
-      <h2>Certificados</h2>
-    </div>
-    <div class="search-bar">
-      <input class="search-input" placeholder="Buscar colaborador..." oninput="filterCerts(this.value)" />
-      <select class="search-input" style="max-width:180px" onchange="filterCertsTipo(this.value)">
-        <option value="">Todos os Tipos</option>
-        <option value="nr33">NR-33</option>
-        <option value="nr35">NR-35</option>
-        <option value="irata">IRATA</option>
-        <option value="resgate">Resgate</option>
-      </select>
-    </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Colaborador</th><th>Obra</th>
-              <th>NR-33</th><th>NR-35</th><th>IRATA</th><th>Resgate</th>
-              <th>Ação</th>
-            </tr>
-          </thead>
-          <tbody id="tbody-certs"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="section-header"><h2>Certificados</h2></div>
+    <div class="search-bar"><input class="search-input" placeholder="Buscar colaborador..." oninput="filterCerts(this.value)"/></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Colaborador</th><th>Obra</th><th>NR-33</th><th>NR-35</th><th>IRATA</th><th>Resgate</th><th>Ação</th></tr></thead>
+      <tbody id="tbody-certs"></tbody>
+    </table></div></div>
   </div>
 
   <!-- ASO -->
   <div class="page" id="page-aso">
-    <div class="section-header">
-      <h2>ASO — Atestado de Saúde Ocupacional</h2>
-    </div>
+    <div class="section-header"><h2>ASO — Atestado de Saúde Ocupacional</h2></div>
     <div class="search-bar">
-      <input class="search-input" placeholder="Buscar colaborador..." oninput="filterAso(this.value)" />
-      <select class="search-input" style="max-width:180px" onchange="filterAsoStatus(this.value)" id="filter-aso-status">
-        <option value="">Todos os Status</option>
-        <option value="valido">Válido</option>
-        <option value="vencer">Vence em 30 dias</option>
-        <option value="vencido">Vencido</option>
-      </select>
+      <input class="search-input" placeholder="Buscar colaborador..." oninput="filterAso(this.value)"/>
+      <select class="search-input" style="max-width:180px" onchange="filterAsoStatus(this.value)"><option value="">Todos os Status</option><option value="valido">Válido</option><option value="vencer">Vence em 30 dias</option><option value="vencido">Vencido</option></select>
     </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Colaborador</th><th>Função</th><th>Obra</th><th>Data ASO</th><th>Validade ASO</th><th>Status</th><th>Dias</th></tr></thead>
-          <tbody id="tbody-aso"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Colaborador</th><th>Função</th><th>Obra</th><th>Data ASO</th><th>Validade ASO</th><th>Status</th><th>Dias</th></tr></thead>
+      <tbody id="tbody-aso"></tbody>
+    </table></div></div>
   </div>
 
   <!-- EPI -->
   <div class="page" id="page-epi">
-    <div class="section-header">
-      <h2>Ficha de EPI</h2>
-      <button class="btn btn-primary" onclick="openModal('modal-epi')">+ Registrar Entrega</button>
-    </div>
-    <div class="search-bar">
-      <input class="search-input" placeholder="Buscar colaborador..." oninput="filterEpi(this.value)" />
-    </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Colaborador</th><th>Obra</th><th>EPI</th>
-              <th>T1 (Jan-Mar)</th><th>T2 (Abr-Jun)</th><th>T3 (Jul-Set)</th><th>T4 (Out-Dez)</th>
-              <th>Próx. Entrega</th>
-            </tr>
-          </thead>
-          <tbody id="tbody-epi"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="section-header"><h2>Ficha de EPI</h2><button class="btn btn-primary" onclick="openModal('modal-epi');resetEpiForm()">+ Registrar Entrega</button></div>
+    <div class="search-bar"><input class="search-input" placeholder="Buscar colaborador..." oninput="filterEpi(this.value)"/></div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Colaborador</th><th>Obra</th><th>EPI</th><th>T1 (Jan-Mar)</th><th>T2 (Abr-Jun)</th><th>T3 (Jul-Set)</th><th>T4 (Out-Dez)</th><th>Próx. Entrega</th></tr></thead>
+      <tbody id="tbody-epi"></tbody>
+    </table></div></div>
   </div>
 
-  <!-- FERIAS -->
+  <!-- FÉRIAS -->
   <div class="page" id="page-ferias">
-    <div class="section-header">
-      <h2>Relatório de Férias</h2>
-    </div>
+    <div class="section-header"><h2>Relatório de Férias</h2></div>
     <div class="filter-bar">
-      <div class="filter-group">
-        <label>Mês</label>
-        <select id="filter-ferias-mes" onchange="renderFerias()">
-          <option value="">Todos</option>
-          <option>Janeiro</option><option>Fevereiro</option><option>Março</option>
-          <option>Abril</option><option>Maio</option><option>Junho</option>
-          <option>Julho</option><option>Agosto</option><option>Setembro</option>
-          <option>Outubro</option><option>Novembro</option><option>Dezembro</option>
-        </select>
+      <div class="filter-group"><label>Mês Vencimento</label>
+        <select id="filter-ferias-mes" onchange="renderFerias()"><option value="">Todos</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select>
       </div>
-      <div class="filter-group">
-        <label>Obra</label>
-        <select id="filter-ferias-obra" onchange="renderFerias()">
-          <option value="">Todas</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Gestor</label>
-        <select id="filter-ferias-gestor" onchange="renderFerias()">
-          <option value="">Todos</option>
-        </select>
-      </div>
+      <div class="filter-group"><label>Obra</label><select id="filter-ferias-obra" onchange="renderFerias()"><option value="">Todas</option></select></div>
+      <div class="filter-group"><label>Gestor</label><select id="filter-ferias-gestor" onchange="renderFerias()"><option value="">Todos</option></select></div>
       <button class="btn btn-outline" onclick="exportFerias()" style="margin-top:auto">Exportar CSV</button>
     </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Colaborador</th><th>Início Empresa</th><th>Aniversário (Período)</th><th>Vencimento Férias</th><th>Dias p/ Vencer</th><th>Status</th></tr></thead>
-          <tbody id="tbody-ferias"></tbody>
-        </table>
-      </div>
-    </div>
+    <div class="card"><div class="table-wrap"><table>
+      <thead><tr><th>Colaborador</th><th>Início</th><th>Início Férias</th><th>Fim Férias</th><th>Vencimento</th><th>Dias p/ Vencer</th><th>Status</th></tr></thead>
+      <tbody id="tbody-ferias"></tbody>
+    </table></div></div>
   </div>
 
   <!-- RELATÓRIOS -->
   <div class="page" id="page-relatorios">
     <div class="section-header"><h2>Relatórios</h2></div>
     <div class="filter-bar">
-      <div class="filter-group">
-        <label>Tipo</label>
-        <select id="rel-tipo" onchange="renderRelatorio()">
-          <option value="geral">Geral</option>
-          <option value="certif">Certificações</option>
-          <option value="epi">Ficha EPI</option>
-          <option value="aso">ASO</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Mês de Admissão</label>
-        <select id="rel-mes" onchange="renderRelatorio()">
-          <option value="">Todos</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option>
-          <option>5</option><option>6</option><option>7</option><option>8</option>
-          <option>9</option><option>10</option><option>11</option><option>12</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Gestor</label>
-        <select id="rel-gestor" onchange="renderRelatorio()">
-          <option value="">Todos</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Obra</label>
-        <select id="rel-obra" onchange="renderRelatorio()">
-          <option value="">Todas</option>
-        </select>
-      </div>
+      <div class="filter-group"><label>Tipo</label><select id="rel-tipo" onchange="renderRelatorio()"><option value="geral">Geral</option><option value="certif">Certificações</option><option value="epi">Ficha EPI</option><option value="aso">ASO</option></select></div>
+      <div class="filter-group"><label>Mês Admissão</label><select id="rel-mes" onchange="renderRelatorio()"><option value="">Todos</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></div>
+      <div class="filter-group"><label>Gestor</label><select id="rel-gestor" onchange="renderRelatorio()"><option value="">Todos</option></select></div>
+      <div class="filter-group"><label>Obra</label><select id="rel-obra" onchange="renderRelatorio()"><option value="">Todas</option></select></div>
       <button class="btn btn-outline" onclick="exportRelatorio()" style="margin-top:auto">Exportar CSV</button>
     </div>
-    <div class="card">
-      <div class="table-wrap">
-        <table><thead><tr id="rel-thead"></tr></thead><tbody id="tbody-relatorio"></tbody></table>
-      </div>
-    </div>
+    <div class="card"><div class="table-wrap"><table><thead><tr id="rel-thead"></tr></thead><tbody id="tbody-relatorio"></tbody></table></div></div>
   </div>
 
   <!-- ALERTAS -->
   <div class="page" id="page-alertas">
-    <div class="section-header">
-      <h2>Alertas & Envio de E-mail</h2>
+    <div class="section-header"><h2>Alertas & Envio</h2>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-primary" onclick="sendAllAlerts('email')">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-          Enviar Tudo por E-mail
-        </button>
-        <button class="btn btn-sm" style="background:#25d366;color:#fff" onclick="sendAllAlerts('whats')">
-          💬 Enviar Tudo pelo WhatsApp
-        </button>
+        <button class="btn btn-primary" onclick="sendAllAlerts('email')">📧 Enviar Tudo por E-mail</button>
+        <button class="btn btn-sm" style="background:#25d366;color:#fff" onclick="sendAllAlerts('whats')">💬 Enviar pelo WhatsApp</button>
       </div>
     </div>
-
     <div class="card" style="margin-bottom:20px">
       <div class="card-title">Configuração de Alertas</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>E-mail do RH</label>
-          <input type="email" id="email-rh" placeholder="rh@empresa.com" />
-        </div>
-        <div class="form-group">
-          <label>Nome do RH</label>
-          <input type="text" id="nome-rh" placeholder="Setor de RH" />
-        </div>
-        <div class="form-group">
-          <label>WhatsApp do RH (com DDD)</label>
-          <input type="text" id="whats-rh" placeholder="5511999999999" />
-          <span style="font-size:11px;color:var(--text3);margin-top:4px">Formato: 55 + DDD + número (ex: 5511999999999)</span>
-        </div>
-        <div class="form-group" style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-outline btn-sm" onclick="saveAlertConfig()" style="height:38px">💾 Salvar Configurações</button>
-        </div>
+        <div class="form-group"><label>E-mail do RH</label><input type="email" id="email-rh" placeholder="rh@empresa.com"/></div>
+        <div class="form-group"><label>Nome do RH</label><input type="text" id="nome-rh" placeholder="Setor de RH"/></div>
+        <div class="form-group"><label>WhatsApp do RH (com DDI+DDD)</label><input type="text" id="whats-rh" placeholder="5511999999999"/><span style="font-size:11px;color:var(--text3);margin-top:4px">Ex: 5511999999999</span></div>
+        <div class="form-group" style="justify-content:flex-end"><button class="btn btn-outline btn-sm" onclick="saveAlertConfig()">💾 Salvar Configurações</button></div>
       </div>
     </div>
-
     <div class="grid-3">
       <div class="card">
-        <div class="card-title" style="color:var(--red)">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-          Certificados Vencendo
-        </div>
+        <div class="card-title" style="color:var(--red)">⚠️ Certificados Vencendo</div>
         <div id="alert-cert-list" class="alert-list"></div>
         <div style="display:flex;gap:6px;margin-top:12px">
           <button class="btn btn-danger btn-sm" style="flex:1" onclick="sendAlertEmail('cert')">📧 E-mail</button>
@@ -695,10 +378,7 @@ tr:last-child td { border-bottom:none; }
         </div>
       </div>
       <div class="card">
-        <div class="card-title" style="color:var(--yellow)">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
-          ASO Vencendo
-        </div>
+        <div class="card-title" style="color:var(--yellow)">🏥 ASO Vencendo</div>
         <div id="alert-aso-list" class="alert-list"></div>
         <div style="display:flex;gap:6px;margin-top:12px">
           <button class="btn btn-sm" style="flex:1;background:var(--yellow);color:#000" onclick="sendAlertEmail('aso')">📧 E-mail</button>
@@ -706,10 +386,7 @@ tr:last-child td { border-bottom:none; }
         </div>
       </div>
       <div class="card">
-        <div class="card-title" style="color:var(--accent)">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Férias Vencendo
-        </div>
+        <div class="card-title" style="color:var(--accent)">🏖️ Férias Vencendo</div>
         <div id="alert-ferias-list" class="alert-list"></div>
         <div style="display:flex;gap:6px;margin-top:12px">
           <button class="btn btn-primary btn-sm" style="flex:1" onclick="sendAlertEmail('ferias')">📧 E-mail</button>
@@ -720,92 +397,47 @@ tr:last-child td { border-bottom:none; }
   </div>
 </main>
 
-<!-- ===== MODAIS ===== -->
-
-<!-- Modal Colaborador -->
+<!-- MODAL COLABORADOR -->
 <div class="modal-overlay" id="modal-colaborador">
   <div class="modal">
-    <div class="modal-header">
-      <h2 id="modal-colab-title">Novo Colaborador</h2>
-      <button class="modal-close" onclick="closeModal('modal-colaborador')">✕</button>
-    </div>
+    <div class="modal-header"><h2 id="modal-colab-title">Novo Colaborador</h2><button class="modal-close" onclick="closeModal('modal-colaborador')">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="colab-id"/>
-      <h4 style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Dados Pessoais</h4>
+      <div class="section-divider">Dados Pessoais</div>
       <div class="form-grid" style="margin-bottom:16px">
-        <div class="form-group form-full">
-          <label>Nome Completo *</label>
-          <input type="text" id="colab-nome" placeholder="Nome completo"/>
-        </div>
-        <div class="form-group">
-          <label>Data de Nascimento</label>
-          <input type="date" id="colab-nascimento"/>
-        </div>
-        <div class="form-group">
-          <label>CPF</label>
-          <input type="text" id="colab-cpf" placeholder="000.000.000-00" oninput="maskCPF(this)" maxlength="14"/>
-        </div>
-        <div class="form-group form-full">
-          <label>Endereço Completo</label>
-          <input type="text" id="colab-endereco" placeholder="Rua, número, bairro, cidade - UF"/>
-        </div>
+        <div class="form-group form-full"><label>Nome Completo *</label><input type="text" id="colab-nome" placeholder="Nome completo"/></div>
+        <div class="form-group"><label>Data de Nascimento</label><input type="date" id="colab-nascimento"/></div>
+        <div class="form-group"><label>CPF</label><input type="text" id="colab-cpf" placeholder="000.000.000-00" oninput="maskCPF(this)" maxlength="14"/></div>
+        <div class="form-group form-full"><label>Endereço Completo</label><input type="text" id="colab-endereco" placeholder="Rua, número, bairro, cidade - UF"/></div>
       </div>
-      <h4 style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Dados Profissionais</h4>
+      <div class="section-divider">Dados Profissionais</div>
       <div class="form-grid" style="margin-bottom:16px">
-        <div class="form-group">
-          <label>Data de Início *</label>
-          <input type="date" id="colab-inicio"/>
-        </div>
-        <div class="form-group">
-          <label>Função *</label>
-          <select id="colab-funcao"><option value="">Selecione...</option></select>
-        </div>
-        <div class="form-group">
-          <label>Obra *</label>
-          <select id="colab-obra" onchange="autoFillGestor()"><option value="">Selecione...</option></select>
-        </div>
-        <div class="form-group">
-          <label>Gestor da Obra</label>
-          <input type="text" id="colab-gestor" placeholder="Auto preenchido" readonly style="opacity:0.7"/>
-        </div>
+        <div class="form-group"><label>Data de Início *</label><input type="date" id="colab-inicio"/></div>
+        <div class="form-group"><label>Função *</label><select id="colab-funcao"><option value="">Selecione...</option></select></div>
+        <div class="form-group"><label>Obra *</label><select id="colab-obra" onchange="autoFillGestor()"><option value="">Selecione...</option></select></div>
+        <div class="form-group"><label>Gestor da Obra</label><input type="text" id="colab-gestor" readonly style="opacity:0.7"/></div>
       </div>
-      <h4 style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">ASO</h4>
+      <div class="section-divider">ASO</div>
       <div class="form-grid" style="margin-bottom:16px">
-        <div class="form-group">
-          <label>Data do ASO</label>
-          <input type="date" id="colab-aso-data"/>
-        </div>
-        <div class="form-group">
-          <label>Validade do ASO</label>
-          <input type="date" id="colab-aso-valid"/>
-        </div>
+        <div class="form-group"><label>Data do ASO</label><input type="date" id="colab-aso-data"/></div>
+        <div class="form-group"><label>Validade do ASO</label><input type="date" id="colab-aso-valid"/></div>
       </div>
-      <h4 style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Certificados</h4>
+      <div class="section-divider">Certificados</div>
+      <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-group"><label>NR-33 Validade</label><input type="date" id="colab-nr33"/></div>
+        <div class="form-group"><label>NR-35 Validade</label><input type="date" id="colab-nr35"/></div>
+        <div class="form-group"><label>IRATA Validade</label><input type="date" id="colab-irata"/></div>
+        <div class="form-group"><label>Resgate Validade</label><input type="date" id="colab-resgate"/></div>
+      </div>
+      <div class="section-divider">Férias</div>
+      <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-group"><label>Data Última Férias</label><input type="date" id="colab-ultima-ferias"/></div>
+        <div class="form-group"><label>Início das Férias</label><input type="date" id="colab-ferias-inicio"/></div>
+        <div class="form-group"><label>Fim das Férias</label><input type="date" id="colab-ferias-fim"/></div>
+      </div>
+      <div class="section-divider">Desligamento</div>
       <div class="form-grid">
-        <div class="form-group">
-          <label>NR-33 Validade</label>
-          <input type="date" id="colab-nr33"/>
-        </div>
-        <div class="form-group">
-          <label>NR-35 Validade</label>
-          <input type="date" id="colab-nr35"/>
-        </div>
-        <div class="form-group">
-          <label>IRATA Validade</label>
-          <input type="date" id="colab-irata"/>
-        </div>
-        <div class="form-group">
-          <label>Resgate Validade</label>
-          <input type="date" id="colab-resgate"/>
-        </div>
-        <div class="form-group">
-          <label>Data de Desligamento</label>
-          <input type="date" id="colab-desligamento"/>
-        </div>
-        <div class="form-group">
-          <label>Data Última Férias</label>
-          <input type="date" id="colab-ultima-ferias"/>
-        </div>
+        <div class="form-group"><label>Data de Desligamento</label><input type="date" id="colab-desligamento"/></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -815,36 +447,17 @@ tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-<!-- Modal Obra -->
+<!-- MODAL OBRA -->
 <div class="modal-overlay" id="modal-obra">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Nova Obra</h2>
-      <button class="modal-close" onclick="closeModal('modal-obra')">✕</button>
-    </div>
+    <div class="modal-header"><h2>Obra</h2><button class="modal-close" onclick="closeModal('modal-obra')">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="obra-id"/>
       <div class="form-grid">
-        <div class="form-group form-full">
-          <label>Nome da Obra *</label>
-          <input type="text" id="obra-nome" placeholder="Ex: Edifício Alpha"/>
-        </div>
-        <div class="form-group form-full">
-          <label>Endereço</label>
-          <input type="text" id="obra-end" placeholder="Endereço completo"/>
-        </div>
-        <div class="form-group">
-          <label>Gestor Responsável</label>
-          <select id="obra-gestor"><option value="">Selecione...</option></select>
-        </div>
-        <div class="form-group">
-          <label>Status</label>
-          <select id="obra-status">
-            <option value="ativa">Ativa</option>
-            <option value="pausada">Pausada</option>
-            <option value="concluida">Concluída</option>
-          </select>
-        </div>
+        <div class="form-group form-full"><label>Nome da Obra *</label><input type="text" id="obra-nome" placeholder="Ex: Edifício Alpha"/></div>
+        <div class="form-group form-full"><label>Endereço</label><input type="text" id="obra-end" placeholder="Endereço completo"/></div>
+        <div class="form-group"><label>Gestor Responsável</label><select id="obra-gestor"><option value="">Selecione...</option></select></div>
+        <div class="form-group"><label>Status</label><select id="obra-status"><option value="ativa">Ativa</option><option value="pausada">Pausada</option><option value="concluida">Concluída</option></select></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -854,28 +467,16 @@ tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-<!-- Modal Gestor -->
+<!-- MODAL GESTOR -->
 <div class="modal-overlay" id="modal-gestor">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Novo Gestor</h2>
-      <button class="modal-close" onclick="closeModal('modal-gestor')">✕</button>
-    </div>
+    <div class="modal-header"><h2>Gestor</h2><button class="modal-close" onclick="closeModal('modal-gestor')">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="gestor-id"/>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Nome Completo *</label>
-          <input type="text" id="gestor-nome" placeholder="Nome"/>
-        </div>
-        <div class="form-group">
-          <label>E-mail</label>
-          <input type="email" id="gestor-email" placeholder="email@empresa.com"/>
-        </div>
-        <div class="form-group">
-          <label>Telefone</label>
-          <input type="text" id="gestor-tel" placeholder="(00) 00000-0000"/>
-        </div>
+        <div class="form-group"><label>Nome Completo *</label><input type="text" id="gestor-nome" placeholder="Nome"/></div>
+        <div class="form-group"><label>E-mail</label><input type="email" id="gestor-email" placeholder="email@empresa.com"/></div>
+        <div class="form-group"><label>Telefone</label><input type="text" id="gestor-tel" placeholder="(00) 00000-0000"/></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -885,39 +486,21 @@ tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-<!-- Modal Função -->
+<!-- MODAL FUNÇÃO -->
 <div class="modal-overlay" id="modal-funcao">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Nova Função</h2>
-      <button class="modal-close" onclick="closeModal('modal-funcao')">✕</button>
-    </div>
+    <div class="modal-header"><h2>Função</h2><button class="modal-close" onclick="closeModal('modal-funcao')">✕</button></div>
     <div class="modal-body">
       <input type="hidden" id="funcao-id"/>
       <div class="form-grid">
-        <div class="form-group">
-          <label>Nome da Função *</label>
-          <input type="text" id="funcao-nome" placeholder="Ex: Soldador"/>
-        </div>
-        <div class="form-group">
-          <label>Descrição</label>
-          <input type="text" id="funcao-desc" placeholder="Breve descrição"/>
-        </div>
-        <div class="form-group form-full">
-          <label>NRs Obrigatórias</label>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)">
-              <input type="checkbox" id="fn-nr33" value="NR-33"/> NR-33
-            </label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)">
-              <input type="checkbox" id="fn-nr35" value="NR-35"/> NR-35
-            </label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)">
-              <input type="checkbox" id="fn-irata" value="IRATA"/> IRATA
-            </label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)">
-              <input type="checkbox" id="fn-resgate" value="Resgate"/> Resgate
-            </label>
+        <div class="form-group"><label>Nome da Função *</label><input type="text" id="funcao-nome" placeholder="Ex: Soldador"/></div>
+        <div class="form-group"><label>Descrição</label><input type="text" id="funcao-desc" placeholder="Breve descrição"/></div>
+        <div class="form-group form-full"><label>NRs Obrigatórias</label>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:6px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)"><input type="checkbox" id="fn-nr33" value="NR-33"/> NR-33</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)"><input type="checkbox" id="fn-nr35" value="NR-35"/> NR-35</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)"><input type="checkbox" id="fn-irata" value="IRATA"/> IRATA</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2)"><input type="checkbox" id="fn-resgate" value="Resgate"/> Resgate</label>
           </div>
         </div>
       </div>
@@ -929,36 +512,18 @@ tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-<!-- Modal EPI -->
+<!-- MODAL EPI -->
 <div class="modal-overlay" id="modal-epi">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Registrar Entrega de EPI</h2>
-      <button class="modal-close" onclick="closeModal('modal-epi')">✕</button>
-    </div>
+    <div class="modal-header"><h2>Registrar Entrega de EPI</h2><button class="modal-close" onclick="closeModal('modal-epi')">✕</button></div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group">
-          <label>Colaborador *</label>
-          <select id="epi-colab"><option value="">Selecione...</option></select>
-        </div>
-        <div class="form-group">
-          <label>EPI *</label>
-          <input type="text" id="epi-nome" placeholder="Ex: Capacete, Luva, Bota"/>
-        </div>
-        <div class="form-group">
-          <label>Data de Entrega *</label>
-          <input type="date" id="epi-data"/>
-        </div>
-        <div class="form-group">
-          <label>Quantidade</label>
-          <input type="number" id="epi-qtd" value="1" min="1"/>
-        </div>
-        <div class="form-group form-full">
-          <label>Observações</label>
-          <input type="text" id="epi-obs" placeholder="Observações adicionais"/>
-        </div>
-        
+        <div class="form-group"><label>Colaborador *</label><select id="epi-colab"><option value="">Selecione...</option></select></div>
+        <div class="form-group"><label>EPI *</label><input type="text" id="epi-nome" placeholder="Ex: Capacete, Luva, Bota"/></div>
+        <div class="form-group"><label>Data de Entrega *</label><input type="date" id="epi-data"/></div>
+        <div class="form-group"><label>Quantidade</label><input type="number" id="epi-qtd" value="1" min="1"/></div>
+        <div class="form-group form-full"><label>Observações</label><input type="text" id="epi-obs" placeholder="Observações adicionais"/></div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('modal-epi')">Cancelar</button>
@@ -967,1141 +532,745 @@ tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-<!-- Modal Email Preview -->
+<!-- MODAL EMAIL PREVIEW -->
 <div class="modal-overlay" id="modal-email">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Preview do E-mail</h2>
-      <button class="modal-close" onclick="closeModal('modal-email')">✕</button>
-    </div>
+    <div class="modal-header"><h2>Preview do E-mail</h2><button class="modal-close" onclick="closeModal('modal-email')">✕</button></div>
     <div class="modal-body">
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Para:</label>
-        <input type="text" id="email-preview-to" readonly/>
-      </div>
-      <div class="form-group" style="margin-bottom:12px">
-        <label>Assunto:</label>
-        <input type="text" id="email-preview-subject" readonly/>
-      </div>
+      <div class="form-group" style="margin-bottom:12px"><label>Para:</label><input type="text" id="email-preview-to" readonly/></div>
+      <div class="form-group" style="margin-bottom:12px"><label>Assunto:</label><input type="text" id="email-preview-subject" readonly/></div>
       <div class="email-preview" id="email-preview-body"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeModal('modal-email')">Fechar</button>
-      <a id="email-mailto-btn" href="#" class="btn btn-primary">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-        Abrir no E-mail
-      </a>
+      <a id="email-mailto-btn" href="#" class="btn btn-primary">📧 Abrir no E-mail</a>
     </div>
   </div>
 </div>
 
-<!-- Toast Container -->
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-// =====================
-// SUPABASE CONFIG
-// =====================
+// ============================================================
+// SUPABASE
+// ============================================================
 const SUPA_URL = 'https://vfwgiaebfhpgttlkgwge.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmd2dpYWViZmhwZ3R0bGtnd2dlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzQ5NzYsImV4cCI6MjA4ODg1MDk3Nn0.N27X0O6cTiofOI3km4zUSPcPSeao0TNs6tfifgldaYA';
+const H = {'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=representation'};
 
-const headers = {
-  'Content-Type': 'application/json',
-  'apikey': SUPA_KEY,
-  'Authorization': 'Bearer ' + SUPA_KEY,
-  'Prefer': 'return=representation'
-};
+async function sbGet(t,q=''){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?order=created_at.asc${q}`,{headers:H});if(!r.ok)throw await r.text();return r.json();}
+async function sbInsert(t,d){const r=await fetch(`${SUPA_URL}/rest/v1/${t}`,{method:'POST',headers:HP,body:JSON.stringify(d)});if(!r.ok)throw await r.text();return r.json();}
+async function sbUpdate(t,id,d){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(d)});if(!r.ok)throw await r.text();}
+async function sbDelete(t,id){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:H});if(!r.ok)throw await r.text();}
 
-async function sbGet(table, query = '') {
-  const r = await fetch(`${SUPA_URL}/rest/v1/${table}?order=created_at.asc${query}`, { headers });
-  if (!r.ok) throw await r.text();
-  return r.json();
-}
-async function sbInsert(table, data) {
-  const r = await fetch(`${SUPA_URL}/rest/v1/${table}`, { method:'POST', headers, body: JSON.stringify(data) });
-  if (!r.ok) throw await r.text();
-  return r.json();
-}
-async function sbUpdate(table, id, data) {
-  const r = await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`, { method:'PATCH', headers, body: JSON.stringify(data) });
-  if (!r.ok) throw await r.text();
-  return r.json();
-}
-async function sbDelete(table, id) {
-  const r = await fetch(`${SUPA_URL}/rest/v1/${table}?id=eq.${id}`, { method:'DELETE', headers });
-  if (!r.ok) throw await r.text();
-}
-
-// =====================
+// ============================================================
 // STATE
-// =====================
-let state = {
-  colaboradores: [],
-  obras: [],
-  gestores: [],
-  funcoes: [],
-  epis: [],
-  currentPage: 'dashboard'
-};
+// ============================================================
+let state = {colaboradores:[],obras:[],gestores:[],funcoes:[],epis:[],currentPage:'dashboard'};
 
-function showLoading(show) {
-  let el = document.getElementById('loading-bar');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'loading-bar';
-    el.style.cssText = 'position:fixed;top:0;left:0;right:0;height:3px;background:var(--accent);z-index:9999;transition:opacity 0.4s';
-    document.body.appendChild(el);
-  }
-  el.style.opacity = show ? '1' : '0';
+function showLoading(show){
+  let el=document.getElementById('loading-bar');
+  if(!el){el=document.createElement('div');el.id='loading-bar';el.style.cssText='position:fixed;top:0;left:0;right:0;height:3px;background:var(--accent);z-index:9999;transition:opacity 0.4s';document.body.appendChild(el);}
+  el.style.opacity=show?'1':'0';
 }
 
-async function loadAll() {
+async function loadAll(){
   showLoading(true);
-  try {
-    const [gestores, obras, funcoes, colaboradores, epis] = await Promise.all([
-      sbGet('gestores'),
-      sbGet('obras'),
-      sbGet('funcoes'),
-      sbGet('colaboradores'),
-      sbGet('epis'),
-    ]);
-    // Map DB fields to state fields
-    state.gestores = gestores.map(g => ({ id:g.id, nome:g.nome, email:g.email, tel:g.tel }));
-    state.obras = obras.map(o => ({ id:o.id, nome:o.nome, endereco:o.endereco, gestorId:o.gestor_id, status:o.status }));
-    state.funcoes = funcoes.map(f => ({ id:f.id, nome:f.nome, desc:f.descricao, nrs:f.nrs||[] }));
-    state.colaboradores = colaboradores.map(c => ({
-      id:c.id, nome:c.nome, nascimento:c.nascimento, cpf:c.cpf, endereco:c.endereco,
-      inicio:c.inicio, funcaoId:c.funcao_id, obraId:c.obra_id,
-      asoData:c.aso_data, asoValid:c.aso_valid,
-      nr33:c.nr33, nr35:c.nr35, irata:c.irata, resgate:c.resgate,
-      desligamento:c.desligamento, ultimaFerias:c.ultima_ferias
+  try{
+    const [g,o,f,c,e]=await Promise.all([sbGet('gestores'),sbGet('obras'),sbGet('funcoes'),sbGet('colaboradores'),sbGet('epis')]);
+    state.gestores=g.map(x=>({id:x.id,nome:x.nome,email:x.email,tel:x.tel}));
+    state.obras=o.map(x=>({id:x.id,nome:x.nome,endereco:x.endereco,gestorId:x.gestor_id,status:x.status}));
+    state.funcoes=f.map(x=>({id:x.id,nome:x.nome,desc:x.descricao,nrs:x.nrs||[]}));
+    state.colaboradores=c.map(x=>({
+      id:x.id,nome:x.nome,nascimento:x.nascimento,cpf:x.cpf,endereco:x.endereco,
+      inicio:x.inicio,funcaoId:x.funcao_id,obraId:x.obra_id,
+      asoData:x.aso_data,asoValid:x.aso_valid,
+      nr33:x.nr33,nr35:x.nr35,irata:x.irata,resgate:x.resgate,
+      desligamento:x.desligamento,
+      ultimaFerias:x.ultima_ferias,feriasInicio:x.ferias_inicio,feriasFim:x.ferias_fim
     }));
-    state.epis = epis.map(e => ({ id:e.id, colabId:e.colab_id, nome:e.nome, data:e.data, qtd:e.qtd, obs:e.obs }));
-  } catch(e) {
-    showToast('Erro ao carregar dados. Verifique o banco.', 'error');
-    console.error(e);
-  }
+    state.epis=e.map(x=>({id:x.id,colabId:x.colab_id,nome:x.nome,data:x.data,qtd:x.qtd,obs:x.obs}));
+  }catch(e){showToast('Erro ao carregar dados do Supabase','error');console.error(e);}
   showLoading(false);
 }
 
-function saveState() { /* dados salvos direto no Supabase via sbInsert/sbUpdate */ }
-
-// =====================
+// ============================================================
 // UTILS
-// =====================
-const today = () => new Date();
-const todayStr = () => fmt(today());
-
-function fmt(d) {
-  if (!d) return '';
-  if (typeof d === 'string') d = new Date(d + 'T00:00:00');
-  return d.toLocaleDateString('pt-BR');
+// ============================================================
+function fmt(d){
+  if(!d)return '';
+  d=String(d).trim();
+  // Already DD/MM/YYYY
+  if(/^\d{2}\/\d{2}\/\d{4}$/.test(d))return d;
+  // YYYY-MM-DD
+  const m=d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(m)return `${m[3]}/${m[2]}/${m[1]}`;
+  return d;
 }
-
-function diffDays(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(dateStr + 'T00:00:00');
-  const t = new Date(); t.setHours(0,0,0,0);
-  return Math.round((d - t) / 86400000);
+// Convert any date to YYYY-MM-DD for Supabase
+function toISO(d){
+  if(!d)return null;
+  d=String(d).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(d))return d.slice(0,10);
+  const m=d.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if(m)return `${m[3]}-${m[2]}-${m[1]}`;
+  return d||null;
 }
-
-function certStatus(dateStr) {
-  if (!dateStr) return null;
-  const d = diffDays(dateStr);
-  if (d < 0) return 'red';
-  if (d <= 30) return 'yellow';
+function diffDays(ds){
+  if(!ds)return null;
+  const iso=toISO(ds);if(!iso)return null;
+  const d=new Date(iso+'T00:00:00');
+  if(isNaN(d))return null;
+  const t=new Date();t.setHours(0,0,0,0);
+  return Math.round((d-t)/86400000);
+}
+function certStatus(ds){
+  if(!ds)return null;
+  const d=diffDays(ds);
+  if(d<0)return 'red';
+  if(d<=30)return 'yellow';
   return 'green';
 }
-
-function certLabel(dateStr) {
-  if (!dateStr) return '<span style="color:var(--text3)">—</span>';
-  const d = diffDays(dateStr);
-  const cls = d < 0 ? 'status-red' : d <= 30 ? 'status-yellow' : 'status-green';
-  const txt = d < 0 ? 'Vencido' : d <= 30 ? 'Vence em ' + d + 'd' : 'Válido';
-  return `<span class="status ${cls}">${fmt(dateStr)}</span>`;
+function certLabel(ds){
+  if(!ds)return '<span style="color:var(--text3)">—</span>';
+  const s=certStatus(ds);
+  const d=diffDays(ds);
+  const cls=s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';
+  const txt=d<0?`Vencido ${Math.abs(d)}d`:d<=30?`Vence ${d}d`:'Válido';
+  return `<span class="status ${cls}">${fmt(ds)} — ${txt}</span>`;
 }
-
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-
-function showToast(msg, type = 'success') {
-  const c = document.getElementById('toast-container');
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.textContent = msg;
-  c.appendChild(t);
-  setTimeout(() => t.remove(), 3500);
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
+function showToast(msg,type='success'){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;
+  c.appendChild(t);setTimeout(()=>t.remove(),3500);
 }
-
-// =====================
-// NAVIGATION
-// =====================
-const pageTitles = {
-  dashboard: 'Dashboard',
-  colaboradores: 'Colaboradores',
-  obras: 'Obras',
-  gestores: 'Gestores',
-  funcoes: 'Funções',
-  certificados: 'Certificados',
-  aso: 'ASO',
-  epi: 'Ficha de EPI',
-  ferias: 'Relatório de Férias',
-  relatorios: 'Relatórios',
-  alertas: 'Alertas & E-mail'
-};
-
-const topbarBtnLabels = {
-  colaboradores: '+ Novo Colaborador',
-  obras: '+ Nova Obra',
-  gestores: '+ Novo Gestor',
-  funcoes: '+ Nova Função',
-  epi: '+ Registrar EPI',
-};
-
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.getAttribute('onclick')?.includes("'" + name + "'")) n.classList.add('active');
-  });
-  document.getElementById('page-title').textContent = pageTitles[name] || name;
-  state.currentPage = name;
-  const btn = document.getElementById('topbar-btn');
-  btn.style.display = topbarBtnLabels[name] ? '' : 'none';
-  if (topbarBtnLabels[name]) btn.textContent = topbarBtnLabels[name];
-
-  if (name === 'dashboard') renderDashboard();
-  if (name === 'colaboradores') renderColabs();
-  if (name === 'obras') renderObras();
-  if (name === 'gestores') renderGestores();
-  if (name === 'funcoes') renderFuncoes();
-  if (name === 'certificados') renderCerts();
-  if (name === 'aso') renderAso();
-  if (name === 'epi') renderEpi();
-  if (name === 'ferias') renderFerias();
-  if (name === 'relatorios') renderRelatorio();
-  if (name === 'alertas') renderAlertas();
-}
-
-function topbarAction() {
-  const map = { colaboradores:'modal-colaborador', obras:'modal-obra', gestores:'modal-gestor', funcoes:'modal-funcao', epi:'modal-epi' };
-  if (map[state.currentPage]) openModal(map[state.currentPage]);
-}
-
-// =====================
-// MODAL
-// =====================
-function openModal(id) {
-  // Populate selects
-  populateSelects();
-  document.getElementById(id).classList.add('open');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-  // Reset form
-  const modal = document.getElementById(id);
-  modal.querySelectorAll('input:not([readonly])').forEach(i => { if(i.type !== 'checkbox') i.value = ''; else i.checked = false; });
-  modal.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-  const hid = modal.querySelector('input[type=hidden]');
-  if (hid) hid.value = '';
-}
-
-// =====================
-// POPULATE SELECTS
-// =====================
-function populateSelects() {
-  // Obras selects
-  ['colab-obra', 'obra-gestor-sel', 'filter-obra-colab', 'filter-ferias-obra', 'rel-obra'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const val = el.value;
-    el.innerHTML = '<option value="">Selecione...</option>';
-    if (id.startsWith('filter') || id.startsWith('rel')) el.innerHTML = '<option value="">Todas</option>';
-    state.obras.forEach(o => { el.innerHTML += `<option value="${o.id}">${o.nome}</option>`; });
-    el.value = val;
-  });
-
-  const obraSelect = document.getElementById('obra-gestor');
-  if (obraSelect) {
-    obraSelect.innerHTML = '<option value="">Selecione...</option>';
-    state.gestores.forEach(g => { obraSelect.innerHTML += `<option value="${g.id}">${g.nome}</option>`; });
-  }
-
-  // Gestores selects
-  ['filter-gestor-colab', 'filter-ferias-gestor', 'rel-gestor'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const val = el.value;
-    el.innerHTML = '<option value="">Todos</option>';
-    state.gestores.forEach(g => { el.innerHTML += `<option value="${g.id}">${g.nome}</option>`; });
-    el.value = val;
-  });
-
-  // Funções selects
-  const fnSel = document.getElementById('colab-funcao');
-  if (fnSel) {
-    fnSel.innerHTML = '<option value="">Selecione...</option>';
-    state.funcoes.forEach(f => { fnSel.innerHTML += `<option value="${f.id}">${f.nome}</option>`; });
-  }
-
-  // Colab for EPI
-  const epiColab = document.getElementById('epi-colab');
-  if (epiColab) {
-    epiColab.innerHTML = '<option value="">Selecione...</option>';
-    state.colaboradores.filter(c => !c.desligamento).forEach(c => { epiColab.innerHTML += `<option value="${c.id}">${c.nome}</option>`; });
-  }
-}
-
-// =====================
-// AUTO FILL GESTOR
-// =====================
-function autoFillGestor() {
-  const obraId = document.getElementById('colab-obra').value;
-  const obra = state.obras.find(o => o.id === obraId);
-  if (obra) {
-    const g = state.gestores.find(g => g.id === obra.gestorId);
-    document.getElementById('colab-gestor').value = g ? g.nome : '';
-  }
-}
-
-// =====================
-// SAVE FUNCS (Supabase)
-// =====================
-async function saveColaborador() {
-  const nome = document.getElementById('colab-nome').value.trim();
-  if (!nome) { showToast('Informe o nome do colaborador', 'error'); return; }
-  const existingId = document.getElementById('colab-id').value;
-  showLoading(true);
-  try {
-    const dbData = {
-      nome,
-      nascimento: document.getElementById('colab-nascimento').value || null,
-      cpf: document.getElementById('colab-cpf').value || null,
-      endereco: document.getElementById('colab-endereco').value || null,
-      inicio: document.getElementById('colab-inicio').value || null,
-      funcao_id: document.getElementById('colab-funcao').value || null,
-      obra_id: document.getElementById('colab-obra').value || null,
-      aso_data: document.getElementById('colab-aso-data').value || null,
-      aso_valid: document.getElementById('colab-aso-valid').value || null,
-      nr33: document.getElementById('colab-nr33').value || null,
-      nr35: document.getElementById('colab-nr35').value || null,
-      irata: document.getElementById('colab-irata').value || null,
-      resgate: document.getElementById('colab-resgate').value || null,
-      desligamento: document.getElementById('colab-desligamento').value || null,
-      ultima_ferias: document.getElementById('colab-ultima-ferias').value || null,
-    };
-    if (existingId) { await sbUpdate('colaboradores', existingId, dbData); showToast('Colaborador atualizado!'); }
-    else { await sbInsert('colaboradores', dbData); showToast('Colaborador cadastrado!'); }
-    closeModal('modal-colaborador');
-    await loadAll(); renderColabs(); updateBadges();
-  } catch(e) { showToast('Erro ao salvar colaborador: ' + e, 'error'); console.error(e); }
-  showLoading(false);
-}
-
-async function saveObra() {
-  const nome = document.getElementById('obra-nome').value.trim();
-  if (!nome) { showToast('Informe o nome da obra', 'error'); return; }
-  const existingId = document.getElementById('obra-id').value;
-  const dbData = {
-    nome,
-    endereco: document.getElementById('obra-end').value || null,
-    gestor_id: document.getElementById('obra-gestor').value || null,
-    status: document.getElementById('obra-status').value,
-  };
-  showLoading(true);
-  try {
-    if (existingId) await sbUpdate('obras', existingId, dbData); else await sbInsert('obras', dbData);
-    closeModal('modal-obra');
-    await loadAll(); renderObras(); populateSelects(); updateBadges();
-    showToast('Obra salva!');
-  } catch(e) { showToast('Erro ao salvar obra', 'error'); console.error(e); }
-  showLoading(false);
-}
-
-async function saveGestor() {
-  const nome = document.getElementById('gestor-nome').value.trim();
-  if (!nome) { showToast('Informe o nome do gestor', 'error'); return; }
-  const existingId = document.getElementById('gestor-id').value;
-  const dbData = {
-    nome,
-    email: document.getElementById('gestor-email').value || null,
-    tel: document.getElementById('gestor-tel').value || null,
-  };
-  showLoading(true);
-  try {
-    if (existingId) await sbUpdate('gestores', existingId, dbData); else await sbInsert('gestores', dbData);
-    closeModal('modal-gestor');
-    await loadAll(); renderGestores(); populateSelects();
-    showToast('Gestor salvo!');
-  } catch(e) { showToast('Erro ao salvar gestor', 'error'); console.error(e); }
-  showLoading(false);
-}
-
-async function saveFuncao() {
-  const nome = document.getElementById('funcao-nome').value.trim();
-  if (!nome) { showToast('Informe o nome da função', 'error'); return; }
-  const existingId = document.getElementById('funcao-id').value;
-  const nrs = [];
-  ['nr33','nr35','irata','resgate'].forEach(k => { if (document.getElementById('fn-'+k).checked) nrs.push(document.getElementById('fn-'+k).value); });
-  const dbData = { nome, descricao: document.getElementById('funcao-desc').value || null, nrs };
-  showLoading(true);
-  try {
-    if (existingId) await sbUpdate('funcoes', existingId, dbData); else await sbInsert('funcoes', dbData);
-    closeModal('modal-funcao');
-    await loadAll(); renderFuncoes(); populateSelects();
-    showToast('Função salva!');
-  } catch(e) { showToast('Erro ao salvar função', 'error'); console.error(e); }
-  showLoading(false);
-}
-
-async function saveEpi() {
-  const colabId = document.getElementById('epi-colab').value;
-  const nome = document.getElementById('epi-nome').value.trim();
-  const data = document.getElementById('epi-data').value;
-  if (!colabId || !nome || !data) { showToast('Preencha os campos obrigatórios', 'error'); return; }
-  showLoading(true);
-  try {
-    const dbData = {
-      colab_id: colabId, nome, data,
-      qtd: parseInt(document.getElementById('epi-qtd').value)||1,
-      obs: document.getElementById('epi-obs').value || null,
-    };
-    await sbInsert('epis', dbData);
-    closeModal('modal-epi');
-    await loadAll(); renderEpi();
-    showToast('Entrega de EPI registrada!');
-  } catch(e) { showToast('Erro ao registrar EPI: ' + e, 'error'); console.error(e); }
-  showLoading(false);
-}
-
-// =====================
-// DELETE (Supabase)
-// =====================
-async function deleteColab(id) {
-  if (!confirm('Excluir colaborador?')) return;
-  showLoading(true);
-  try { await sbDelete('colaboradores', id); await loadAll(); renderColabs(); updateBadges(); showToast('Colaborador excluído', 'error'); }
-  catch(e) { showToast('Erro ao excluir', 'error'); } showLoading(false);
-}
-async function deleteObra(id) {
-  if (!confirm('Excluir obra?')) return;
-  showLoading(true);
-  try { await sbDelete('obras', id); await loadAll(); renderObras(); populateSelects(); showToast('Obra excluída', 'error'); }
-  catch(e) { showToast('Erro ao excluir', 'error'); } showLoading(false);
-}
-async function deleteGestor(id) {
-  if (!confirm('Excluir gestor?')) return;
-  showLoading(true);
-  try { await sbDelete('gestores', id); await loadAll(); renderGestores(); populateSelects(); showToast('Gestor excluído', 'error'); }
-  catch(e) { showToast('Erro ao excluir', 'error'); } showLoading(false);
-}
-async function deleteFuncao(id) {
-  if (!confirm('Excluir função?')) return;
-  showLoading(true);
-  try { await sbDelete('funcoes', id); await loadAll(); renderFuncoes(); populateSelects(); showToast('Função excluída', 'error'); }
-  catch(e) { showToast('Erro ao excluir', 'error'); } showLoading(false);
-}
-
-// =====================
-// EDIT
-// =====================
-function editColab(id) {
-  const c = state.colaboradores.find(x => x.id === id);
-  if (!c) return;
-  populateSelects();
-  document.getElementById('colab-id').value = c.id;
-  document.getElementById('colab-nome').value = c.nome;
-  document.getElementById('colab-nascimento').value = c.nascimento || '';
-  document.getElementById('colab-cpf').value = c.cpf || '';
-  document.getElementById('colab-endereco').value = c.endereco || '';
-  document.getElementById('colab-inicio').value = c.inicio || '';
-  document.getElementById('colab-funcao').value = c.funcaoId || '';
-  document.getElementById('colab-obra').value = c.obraId || '';
-  autoFillGestor();
-  document.getElementById('colab-aso-data').value = c.asoData || '';
-  document.getElementById('colab-aso-valid').value = c.asoValid || '';
-  document.getElementById('colab-nr33').value = c.nr33 || '';
-  document.getElementById('colab-nr35').value = c.nr35 || '';
-  document.getElementById('colab-irata').value = c.irata || '';
-  document.getElementById('colab-resgate').value = c.resgate || '';
-  document.getElementById('colab-desligamento').value = c.desligamento || '';
-  document.getElementById('colab-ultima-ferias').value = c.ultimaFerias || '';
-  document.getElementById('modal-colab-title').textContent = 'Editar Colaborador';
-  document.getElementById('modal-colaborador').classList.add('open');
-}
-
-// =====================
-// RENDER COLABS
-// =====================
-let _colabFilter = '', _colabObra = '', _colabGestor = '';
-function filterColabs(v) { _colabFilter = v.toLowerCase(); renderColabs(); }
-function filterColabsObra(v) { _colabObra = v; renderColabs(); }
-function filterColabsGestor(v) { _colabGestor = v; renderColabs(); }
-
-function renderColabs() {
-  populateSelects();
-  let list = state.colaboradores.filter(c => !c.desligamento);
-  if (_colabFilter) list = list.filter(c => c.nome.toLowerCase().includes(_colabFilter) || getNome('funcoes', c.funcaoId).toLowerCase().includes(_colabFilter));
-  if (_colabObra) list = list.filter(c => c.obraId === _colabObra);
-  if (_colabGestor) {
-    const obra = state.obras.filter(o => o.gestorId === _colabGestor).map(o => o.id);
-    list = list.filter(c => obra.includes(c.obraId));
-  }
-  const tb = document.getElementById('tbody-colabs');
-  if (!list.length) { tb.innerHTML = `<tr><td colspan="8"><div class="empty-state"><p>Nenhum colaborador cadastrado</p></div></td></tr>`; return; }
-  tb.innerHTML = list.map(c => {
-    const aso = certStatus(c.asoValid);
-    const asoClass = aso === 'red' ? 'status-red' : aso === 'yellow' ? 'status-yellow' : 'status-green';
-    const asoTxt = !c.asoValid ? '—' : aso === 'red' ? 'Vencido' : aso === 'yellow' ? 'Vence em breve' : 'Válido';
-    return `<tr>
-      <td><strong style="color:var(--text)">${c.nome}</strong></td>
-      <td>${getNome('funcoes',c.funcaoId)}</td>
-      <td>${getNome('obras',c.obraId)}</td>
-      <td>${getGestorByObra(c.obraId)}</td>
-      <td><span class="status ${asoClass}">${asoTxt}</span></td>
-      <td>${fmt(c.inicio)}</td>
-      <td>${c.ultimaFerias ? fmt(c.ultimaFerias) : '<span style="color:var(--text3)">—</span>'}</td>
-      <td><span class="pill pill-green">Ativo</span></td>
-      <td class="action-btns">
-        <button class="btn btn-outline btn-sm" onclick="editColab('${c.id}')">Editar</button>
-        <button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteColab('${c.id}')">Excluir</button>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-// =====================
-// RENDER OBRAS
-// =====================
-function renderObras() {
-  const tb = document.getElementById('tbody-obras');
-  if (!state.obras.length) { tb.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>Nenhuma obra cadastrada</p></div></td></tr>`; return; }
-  tb.innerHTML = state.obras.map(o => {
-    const count = state.colaboradores.filter(c => c.obraId === o.id && !c.desligamento).length;
-    const statusMap = { ativa:'status-green', pausada:'status-yellow', concluida:'status-blue' };
-    return `<tr>
-      <td><strong style="color:var(--text)">${o.nome}</strong></td>
-      <td>${o.endereco || '—'}</td>
-      <td>${getNome('gestores',o.gestorId)}</td>
-      <td><span class="status ${statusMap[o.status]||'status-blue'}">${o.status||'ativa'}</span></td>
-      <td><span class="pill pill-blue">${count}</span></td>
-      <td class="action-btns">
-        <button class="btn btn-outline btn-sm" onclick="editObra('${o.id}')">Editar</button>
-        <button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteObra('${o.id}')">Excluir</button>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function editObra(id) {
-  const o = state.obras.find(x => x.id === id);
-  if (!o) return;
-  populateSelects();
-  document.getElementById('obra-id').value = o.id;
-  document.getElementById('obra-nome').value = o.nome;
-  document.getElementById('obra-end').value = o.endereco || '';
-  document.getElementById('obra-gestor').value = o.gestorId || '';
-  document.getElementById('obra-status').value = o.status || 'ativa';
-  document.getElementById('modal-obra').classList.add('open');
-}
-
-// =====================
-// RENDER GESTORES
-// =====================
-function renderGestores() {
-  const tb = document.getElementById('tbody-gestores');
-  if (!state.gestores.length) { tb.innerHTML = `<tr><td colspan="5"><div class="empty-state"><p>Nenhum gestor cadastrado</p></div></td></tr>`; return; }
-  tb.innerHTML = state.gestores.map(g => {
-    const obras = state.obras.filter(o => o.gestorId === g.id).map(o => o.nome).join(', ') || '—';
-    return `<tr>
-      <td><strong style="color:var(--text)">${g.nome}</strong></td>
-      <td>${g.email || '—'}</td>
-      <td>${g.tel || '—'}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${obras}</td>
-      <td class="action-btns">
-        <button class="btn btn-outline btn-sm" onclick="editGestor('${g.id}')">Editar</button>
-        <button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteGestor('${g.id}')">Excluir</button>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function editGestor(id) {
-  const g = state.gestores.find(x => x.id === id);
-  if (!g) return;
-  document.getElementById('gestor-id').value = g.id;
-  document.getElementById('gestor-nome').value = g.nome;
-  document.getElementById('gestor-email').value = g.email || '';
-  document.getElementById('gestor-tel').value = g.tel || '';
-  document.getElementById('modal-gestor').classList.add('open');
-}
-
-// =====================
-// RENDER FUNCOES
-// =====================
-function renderFuncoes() {
-  const tb = document.getElementById('tbody-funcoes');
-  if (!state.funcoes.length) { tb.innerHTML = `<tr><td colspan="4"><div class="empty-state"><p>Nenhuma função cadastrada</p></div></td></tr>`; return; }
-  tb.innerHTML = state.funcoes.map(f => `<tr>
-    <td><strong style="color:var(--text)">${f.nome}</strong></td>
-    <td>${f.desc || '—'}</td>
-    <td>${(f.nrs||[]).map(n=>`<span class="pill pill-orange">${n}</span>`).join(' ') || '—'}</td>
-    <td class="action-btns">
-      <button class="btn btn-outline btn-sm" onclick="editFuncao('${f.id}')">Editar</button>
-      <button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteFuncao('${f.id}')">Excluir</button>
-    </td>
-  </tr>`).join('');
-}
-
-function editFuncao(id) {
-  const f = state.funcoes.find(x => x.id === id);
-  if (!f) return;
-  document.getElementById('funcao-id').value = f.id;
-  document.getElementById('funcao-nome').value = f.nome;
-  document.getElementById('funcao-desc').value = f.desc || '';
-  ['nr33','nr35','irata','resgate'].forEach(k => {
-    document.getElementById('fn-'+k).checked = (f.nrs||[]).includes(document.getElementById('fn-'+k).value);
-  });
-  document.getElementById('modal-funcao').classList.add('open');
-}
-
-// =====================
-// RENDER CERTS
-// =====================
-let _certFilter = '', _certTipo = '';
-function filterCerts(v) { _certFilter = v.toLowerCase(); renderCerts(); }
-function filterCertsTipo(v) { _certTipo = v; renderCerts(); }
-
-function renderCerts() {
-  let list = state.colaboradores.filter(c => !c.desligamento);
-  if (_certFilter) list = list.filter(c => c.nome.toLowerCase().includes(_certFilter));
-  const tb = document.getElementById('tbody-certs');
-  if (!list.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>Nenhum colaborador</p></div></td></tr>`; return; }
-  tb.innerHTML = list.map(c => `<tr>
-    <td><strong style="color:var(--text)">${c.nome}</strong></td>
-    <td>${getNome('obras',c.obraId)}</td>
-    <td>${certLabel(c.nr33)}</td>
-    <td>${certLabel(c.nr35)}</td>
-    <td>${certLabel(c.irata)}</td>
-    <td>${certLabel(c.resgate)}</td>
-    <td><button class="btn btn-outline btn-sm" onclick="editColab('${c.id}');showPage('colaboradores')">Editar</button></td>
-  </tr>`).join('');
-}
-
-// =====================
-// RENDER ASO
-// =====================
-let _asoFilter = '', _asoStatus = '';
-function filterAso(v) { _asoFilter = v.toLowerCase(); renderAso(); }
-function filterAsoStatus(v) { _asoStatus = v; renderAso(); }
-
-function renderAso() {
-  let list = state.colaboradores.filter(c => !c.desligamento);
-  if (_asoFilter) list = list.filter(c => c.nome.toLowerCase().includes(_asoFilter));
-  if (_asoStatus) {
-    list = list.filter(c => {
-      const s = certStatus(c.asoValid);
-      if (_asoStatus === 'valido') return s === 'green';
-      if (_asoStatus === 'vencer') return s === 'yellow';
-      if (_asoStatus === 'vencido') return s === 'red';
-      return true;
-    });
-  }
-  const tb = document.getElementById('tbody-aso');
-  if (!list.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>Nenhum registro</p></div></td></tr>`; return; }
-  tb.innerHTML = list.map(c => {
-    const s = certStatus(c.asoValid);
-    const cls = s === 'red' ? 'status-red' : s === 'yellow' ? 'status-yellow' : 'status-green';
-    const txt = !c.asoValid ? '—' : s === 'red' ? 'Vencido' : s === 'yellow' ? 'Vence em breve' : 'Válido';
-    const days = c.asoValid ? diffDays(c.asoValid) : null;
-    return `<tr>
-      <td><strong style="color:var(--text)">${c.nome}</strong></td>
-      <td>${getNome('funcoes',c.funcaoId)}</td>
-      <td>${getNome('obras',c.obraId)}</td>
-      <td>${fmt(c.asoData)}</td>
-      <td>${fmt(c.asoValid)}</td>
-      <td><span class="status ${cls}">${txt}</span></td>
-      <td style="color:${days === null ? 'var(--text3)' : days < 0 ? 'var(--red)' : days <= 30 ? 'var(--yellow)' : 'var(--green)'};font-weight:600">${days === null ? '—' : days < 0 ? days + 'd' : '+' + days + 'd'}</td>
-      <td>${c.asoArquivo ? `<a href="${c.asoArquivo}" target="_blank" class="file-link"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Ver ASO</a>` : '<span style="color:var(--text3)">—</span>'}</td>
-    </tr>`;
-  }).join('');
-}
-
-// =====================
-// RENDER EPI
-// =====================
-let _epiFilter = '';
-function filterEpi(v) { _epiFilter = v.toLowerCase(); renderEpi(); }
-
-function getQuarter(dateStr) {
-  if (!dateStr) return null;
-  const m = new Date(dateStr + 'T00:00:00').getMonth();
-  return Math.floor(m / 3) + 1;
-}
-
-function renderEpi() {
-  let colabs = state.colaboradores.filter(c => !c.desligamento);
-  if (_epiFilter) colabs = colabs.filter(c => c.nome.toLowerCase().includes(_epiFilter));
-  const tb = document.getElementById('tbody-epi');
-  if (!colabs.length) { tb.innerHTML = `<tr><td colspan="8"><div class="empty-state"><p>Nenhum colaborador</p></div></td></tr>`; return; }
-  tb.innerHTML = colabs.map(c => {
-    const cepiList = state.epis.filter(e => e.colabId === c.id);
-    const byQ = [1,2,3,4].map(q => cepiList.filter(e => getQuarter(e.data) === q));
-    const lastDate = cepiList.length ? cepiList.sort((a,b) => b.data.localeCompare(a.data))[0].data : null;
-    const nextDate = lastDate ? (() => {
-      const d = new Date(lastDate + 'T00:00:00');
-      d.setMonth(d.getMonth() + 3);
-      return d.toISOString().split('T')[0];
-    })() : null;
-    const nextDiff = nextDate ? diffDays(nextDate) : null;
-    const nextClass = nextDiff === null ? 'var(--text3)' : nextDiff < 0 ? 'var(--red)' : nextDiff <= 14 ? 'var(--yellow)' : 'var(--green)';
-    return `<tr>
-      <td><strong style="color:var(--text)">${c.nome}</strong></td>
-      <td>${getNome('obras',c.obraId)}</td>
-      <td>${cepiList.length ? cepiList[cepiList.length-1].nome : '—'}</td>
-      ${[0,1,2,3].map(i => `<td>${byQ[i].length ? `<span class="status status-green">${fmt(byQ[i][byQ[i].length-1].data)}</span>` : `<span style="color:var(--text3)">—</span>`}</td>`).join('')}
-      <td style="color:${nextClass};font-weight:600">${nextDate ? fmt(nextDate) : '—'}</td>
-    </tr>`;
-  }).join('');
-}
-
-// =====================
-// RENDER FERIAS
-// =====================
-function calcVencFerias(inicioStr) {
-  if (!inicioStr) return null;
-  const d = new Date(inicioStr + 'T00:00:00');
-  d.setFullYear(d.getFullYear() + 1);
+function getNome(type,id){if(!id)return '—';const item=state[type]?.find(x=>x.id===id);return item?item.nome:'—';}
+function getGestorByObra(obraId){const o=state.obras.find(x=>x.id===obraId);if(!o)return '—';return getNome('gestores',o.gestorId);}
+function calcVencFerias(inicioStr){
+  if(!inicioStr)return null;
+  const iso=toISO(inicioStr);
+  if(!iso)return null;
+  const d=new Date(iso+'T00:00:00');
+  if(isNaN(d))return null;
+  d.setFullYear(d.getFullYear()+1);
   return d.toISOString().split('T')[0];
 }
 
-function renderFerias() {
+// ============================================================
+// NAVIGATION
+// ============================================================
+const pageTitles={dashboard:'Dashboard',colaboradores:'Colaboradores',obras:'Obras',gestores:'Gestores',funcoes:'Funções',certificados:'Certificados',aso:'ASO',epi:'Ficha de EPI',ferias:'Férias',relatorios:'Relatórios',alertas:'Alertas & Envio'};
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active');});
+  document.getElementById('page-title').textContent=pageTitles[name]||name;
+  state.currentPage=name;
+  document.getElementById('topbar-btn').style.display='none';
+  const renders={dashboard:renderDashboard,colaboradores:renderColabs,obras:renderObras,gestores:renderGestores,funcoes:renderFuncoes,certificados:renderCerts,aso:renderAso,epi:renderEpi,ferias:renderFerias,relatorios:renderRelatorio,alertas:renderAlertas};
+  if(renders[name])renders[name]();
+}
+
+function topbarAction(){}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(id){
   populateSelects();
-  const mes = document.getElementById('filter-ferias-mes').value;
-  const obra = document.getElementById('filter-ferias-obra').value;
-  const gestor = document.getElementById('filter-ferias-gestor').value;
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
 
-  let list = state.colaboradores.filter(c => !c.desligamento);
-  if (obra) list = list.filter(c => c.obraId === obra);
-  if (gestor) {
-    const obras = state.obras.filter(o => o.gestorId === gestor).map(o => o.id);
-    list = list.filter(c => obras.includes(c.obraId));
-  }
-  if (mes) {
-    const mIdx = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'].indexOf(mes);
-    list = list.filter(c => {
-      const v = calcVencFerias(c.inicio);
-      if (!v) return false;
-      return new Date(v + 'T00:00:00').getMonth() === mIdx;
-    });
-  }
+// Reset forms
+function resetColabForm(){
+  document.getElementById('colab-id').value='';
+  document.getElementById('modal-colab-title').textContent='Novo Colaborador';
+  ['colab-nome','colab-nascimento','colab-cpf','colab-endereco','colab-inicio',
+   'colab-gestor','colab-aso-data','colab-aso-valid','colab-nr33','colab-nr35',
+   'colab-irata','colab-resgate','colab-desligamento','colab-ultima-ferias',
+   'colab-ferias-inicio','colab-ferias-fim'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('colab-funcao').value='';
+  document.getElementById('colab-obra').value='';
+}
+function resetObraForm(){['obra-id','obra-nome','obra-end'].forEach(id=>document.getElementById(id).value='');document.getElementById('obra-gestor').value='';document.getElementById('obra-status').value='ativa';}
+function resetGestorForm(){['gestor-id','gestor-nome','gestor-email','gestor-tel'].forEach(id=>document.getElementById(id).value='');}
+function resetFuncaoForm(){['funcao-id','funcao-nome','funcao-desc'].forEach(id=>document.getElementById(id).value='');['fn-nr33','fn-nr35','fn-irata','fn-resgate'].forEach(id=>document.getElementById(id).checked=false);}
+function resetEpiForm(){['epi-nome','epi-obs'].forEach(id=>document.getElementById(id).value='');document.getElementById('epi-data').value='';document.getElementById('epi-qtd').value='1';document.getElementById('epi-colab').value='';}
 
-  const tb = document.getElementById('tbody-ferias');
-  if (!list.length) { tb.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>Nenhum registro</p></div></td></tr>`; return; }
-  tb.innerHTML = list.map(c => {
-    const venc = calcVencFerias(c.inicio);
-    const days = venc ? diffDays(venc) : null;
-    const cls = days === null ? '' : days < 0 ? 'status-red' : days <= 30 ? 'status-yellow' : 'status-green';
-    const txt = days === null ? '—' : days < 0 ? 'Vencido' : days <= 30 ? 'Vence em ' + days + 'd' : 'Válido';
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
+
+// ============================================================
+// POPULATE SELECTS
+// ============================================================
+function populateSelects(){
+  [['colab-obra','Selecione...'],['filter-obra-colab','Todas as Obras'],['filter-ferias-obra','Todas'],['rel-obra','Todas']].forEach(([id,ph])=>{
+    const el=document.getElementById(id);if(!el)return;
+    const val=el.value;el.innerHTML=`<option value="">${ph}</option>`;
+    state.obras.forEach(o=>{el.innerHTML+=`<option value="${o.id}">${o.nome}</option>`;});
+    el.value=val;
+  });
+  const obraGestor=document.getElementById('obra-gestor');
+  if(obraGestor){const v=obraGestor.value;obraGestor.innerHTML='<option value="">Selecione...</option>';state.gestores.forEach(g=>{obraGestor.innerHTML+=`<option value="${g.id}">${g.nome}</option>`;});obraGestor.value=v;}
+  [['filter-gestor-colab','Todos os Gestores'],['filter-ferias-gestor','Todos'],['rel-gestor','Todos']].forEach(([id,ph])=>{
+    const el=document.getElementById(id);if(!el)return;
+    const val=el.value;el.innerHTML=`<option value="">${ph}</option>`;
+    state.gestores.forEach(g=>{el.innerHTML+=`<option value="${g.id}">${g.nome}</option>`;});
+    el.value=val;
+  });
+  const fnSel=document.getElementById('colab-funcao');
+  if(fnSel){const v=fnSel.value;fnSel.innerHTML='<option value="">Selecione...</option>';state.funcoes.forEach(f=>{fnSel.innerHTML+=`<option value="${f.id}">${f.nome}</option>`;});fnSel.value=v;}
+  const epiColab=document.getElementById('epi-colab');
+  if(epiColab){epiColab.innerHTML='<option value="">Selecione...</option>';state.colaboradores.filter(c=>!c.desligamento).forEach(c=>{epiColab.innerHTML+=`<option value="${c.id}">${c.nome}</option>`;});}
+}
+
+// ============================================================
+// CPF MASK
+// ============================================================
+function maskCPF(input){
+  let v=input.value.replace(/\D/g,'').slice(0,11);
+  if(v.length>9)v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,'$1.$2.$3-$4');
+  else if(v.length>6)v=v.replace(/(\d{3})(\d{3})(\d{1,3})/,'$1.$2.$3');
+  else if(v.length>3)v=v.replace(/(\d{3})(\d{1,3})/,'$1.$2');
+  input.value=v;
+}
+
+// ============================================================
+// AUTO FILL GESTOR
+// ============================================================
+function autoFillGestor(){
+  const obraId=document.getElementById('colab-obra').value;
+  const obra=state.obras.find(o=>o.id===obraId);
+  if(obra){const g=state.gestores.find(g=>g.id===obra.gestorId);document.getElementById('colab-gestor').value=g?g.nome:'';}
+  else{document.getElementById('colab-gestor').value='';}
+}
+
+// ============================================================
+// SAVE COLABORADOR — getDateVal reads YYYY-MM-DD from date input
+// ============================================================
+function getDateVal(id){
+  const el=document.getElementById(id);
+  if(!el||!el.value)return null;
+  return toISO(el.value);
+}
+
+async function saveColaborador(){
+  const nome=document.getElementById('colab-nome').value.trim();
+  if(!nome){showToast('Informe o nome do colaborador','error');return;}
+  const existingId=document.getElementById('colab-id').value;
+  const dbData={
+    nome,
+    nascimento:getDateVal('colab-nascimento'),
+    cpf:document.getElementById('colab-cpf').value||null,
+    endereco:document.getElementById('colab-endereco').value||null,
+    inicio:getDateVal('colab-inicio'),
+    funcao_id:document.getElementById('colab-funcao').value||null,
+    obra_id:document.getElementById('colab-obra').value||null,
+    aso_data:getDateVal('colab-aso-data'),
+    aso_valid:getDateVal('colab-aso-valid'),
+    nr33:getDateVal('colab-nr33'),
+    nr35:getDateVal('colab-nr35'),
+    irata:getDateVal('colab-irata'),
+    resgate:getDateVal('colab-resgate'),
+    desligamento:getDateVal('colab-desligamento'),
+    ultima_ferias:getDateVal('colab-ultima-ferias'),
+    ferias_inicio:getDateVal('colab-ferias-inicio'),
+    ferias_fim:getDateVal('colab-ferias-fim'),
+  };
+  showLoading(true);
+  try{
+    if(existingId){await sbUpdate('colaboradores',existingId,dbData);showToast('Colaborador atualizado!');}
+    else{await sbInsert('colaboradores',dbData);showToast('Colaborador cadastrado!');}
+    closeModal('modal-colaborador');
+    await loadAll();renderColabs();updateBadges();
+  }catch(e){showToast('Erro ao salvar: '+e,'error');console.error(e);}
+  showLoading(false);
+}
+
+async function saveObra(){
+  const nome=document.getElementById('obra-nome').value.trim();
+  if(!nome){showToast('Informe o nome da obra','error');return;}
+  const existingId=document.getElementById('obra-id').value;
+  const dbData={nome,endereco:document.getElementById('obra-end').value||null,gestor_id:document.getElementById('obra-gestor').value||null,status:document.getElementById('obra-status').value};
+  showLoading(true);
+  try{
+    if(existingId)await sbUpdate('obras',existingId,dbData);else await sbInsert('obras',dbData);
+    closeModal('modal-obra');await loadAll();renderObras();populateSelects();updateBadges();showToast('Obra salva!');
+  }catch(e){showToast('Erro ao salvar obra','error');console.error(e);}
+  showLoading(false);
+}
+
+async function saveGestor(){
+  const nome=document.getElementById('gestor-nome').value.trim();
+  if(!nome){showToast('Informe o nome do gestor','error');return;}
+  const existingId=document.getElementById('gestor-id').value;
+  const dbData={nome,email:document.getElementById('gestor-email').value||null,tel:document.getElementById('gestor-tel').value||null};
+  showLoading(true);
+  try{
+    if(existingId)await sbUpdate('gestores',existingId,dbData);else await sbInsert('gestores',dbData);
+    closeModal('modal-gestor');await loadAll();renderGestores();populateSelects();showToast('Gestor salvo!');
+  }catch(e){showToast('Erro ao salvar gestor','error');console.error(e);}
+  showLoading(false);
+}
+
+async function saveFuncao(){
+  const nome=document.getElementById('funcao-nome').value.trim();
+  if(!nome){showToast('Informe o nome da função','error');return;}
+  const existingId=document.getElementById('funcao-id').value;
+  const nrs=[];['nr33','nr35','irata','resgate'].forEach(k=>{if(document.getElementById('fn-'+k).checked)nrs.push(document.getElementById('fn-'+k).value);});
+  const dbData={nome,descricao:document.getElementById('funcao-desc').value||null,nrs};
+  showLoading(true);
+  try{
+    if(existingId)await sbUpdate('funcoes',existingId,dbData);else await sbInsert('funcoes',dbData);
+    closeModal('modal-funcao');await loadAll();renderFuncoes();populateSelects();showToast('Função salva!');
+  }catch(e){showToast('Erro ao salvar função','error');console.error(e);}
+  showLoading(false);
+}
+
+async function saveEpi(){
+  const colabId=document.getElementById('epi-colab').value;
+  const nome=document.getElementById('epi-nome').value.trim();
+  const data=getDateVal('epi-data');
+  if(!colabId||!nome||!data){showToast('Preencha os campos obrigatórios','error');return;}
+  const dbData={colab_id:colabId,nome,data,qtd:parseInt(document.getElementById('epi-qtd').value)||1,obs:document.getElementById('epi-obs').value||null};
+  showLoading(true);
+  try{
+    await sbInsert('epis',dbData);closeModal('modal-epi');await loadAll();renderEpi();showToast('EPI registrado!');
+  }catch(e){showToast('Erro ao registrar EPI','error');console.error(e);}
+  showLoading(false);
+}
+
+// ============================================================
+// DELETE
+// ============================================================
+async function deleteColab(id){if(!confirm('Excluir colaborador?'))return;showLoading(true);try{await sbDelete('colaboradores',id);await loadAll();renderColabs();updateBadges();showToast('Excluído','error');}catch(e){showToast('Erro ao excluir','error');}showLoading(false);}
+async function deleteObra(id){if(!confirm('Excluir obra?'))return;showLoading(true);try{await sbDelete('obras',id);await loadAll();renderObras();populateSelects();showToast('Excluído','error');}catch(e){showToast('Erro ao excluir','error');}showLoading(false);}
+async function deleteGestor(id){if(!confirm('Excluir gestor?'))return;showLoading(true);try{await sbDelete('gestores',id);await loadAll();renderGestores();populateSelects();showToast('Excluído','error');}catch(e){showToast('Erro ao excluir','error');}showLoading(false);}
+async function deleteFuncao(id){if(!confirm('Excluir função?'))return;showLoading(true);try{await sbDelete('funcoes',id);await loadAll();renderFuncoes();populateSelects();showToast('Excluído','error');}catch(e){showToast('Erro ao excluir','error');}showLoading(false);}
+
+// ============================================================
+// EDIT
+// ============================================================
+// setDateInput: always set YYYY-MM-DD so browser renders correctly
+function setDateInput(id, val){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.value=toISO(val)||'';
+}
+
+function editColab(id){
+  const c=state.colaboradores.find(x=>x.id===id);if(!c)return;
+  populateSelects();
+  document.getElementById('colab-id').value=c.id;
+  document.getElementById('modal-colab-title').textContent='Editar Colaborador';
+  document.getElementById('colab-nome').value=c.nome||'';
+  document.getElementById('colab-cpf').value=c.cpf||'';
+  document.getElementById('colab-endereco').value=c.endereco||'';
+  document.getElementById('colab-funcao').value=c.funcaoId||'';
+  document.getElementById('colab-obra').value=c.obraId||'';
+  autoFillGestor();
+  setDateInput('colab-nascimento',c.nascimento);
+  setDateInput('colab-inicio',c.inicio);
+  setDateInput('colab-aso-data',c.asoData);
+  setDateInput('colab-aso-valid',c.asoValid);
+  setDateInput('colab-nr33',c.nr33);
+  setDateInput('colab-nr35',c.nr35);
+  setDateInput('colab-irata',c.irata);
+  setDateInput('colab-resgate',c.resgate);
+  setDateInput('colab-desligamento',c.desligamento);
+  setDateInput('colab-ultima-ferias',c.ultimaFerias);
+  setDateInput('colab-ferias-inicio',c.feriasInicio);
+  setDateInput('colab-ferias-fim',c.feriasFim);
+  document.getElementById('modal-colaborador').classList.add('open');
+}
+function editObra(id){
+  const o=state.obras.find(x=>x.id===id);if(!o)return;
+  populateSelects();
+  document.getElementById('obra-id').value=o.id;
+  document.getElementById('obra-nome').value=o.nome;
+  document.getElementById('obra-end').value=o.endereco||'';
+  document.getElementById('obra-gestor').value=o.gestorId||'';
+  document.getElementById('obra-status').value=o.status||'ativa';
+  document.getElementById('modal-obra').classList.add('open');
+}
+function editGestor(id){
+  const g=state.gestores.find(x=>x.id===id);if(!g)return;
+  document.getElementById('gestor-id').value=g.id;
+  document.getElementById('gestor-nome').value=g.nome;
+  document.getElementById('gestor-email').value=g.email||'';
+  document.getElementById('gestor-tel').value=g.tel||'';
+  document.getElementById('modal-gestor').classList.add('open');
+}
+function editFuncao(id){
+  const f=state.funcoes.find(x=>x.id===id);if(!f)return;
+  document.getElementById('funcao-id').value=f.id;
+  document.getElementById('funcao-nome').value=f.nome;
+  document.getElementById('funcao-desc').value=f.desc||'';
+  ['nr33','nr35','irata','resgate'].forEach(k=>{document.getElementById('fn-'+k).checked=(f.nrs||[]).includes(document.getElementById('fn-'+k).value);});
+  document.getElementById('modal-funcao').classList.add('open');
+}
+
+// ============================================================
+// RENDER COLABORADORES
+// ============================================================
+let _colabFilter='',_colabObra='',_colabGestor='';
+function filterColabs(v){_colabFilter=v.toLowerCase();renderColabs();}
+function filterColabsObra(v){_colabObra=v;renderColabs();}
+function filterColabsGestor(v){_colabGestor=v;renderColabs();}
+
+function renderColabs(){
+  populateSelects();
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(_colabFilter)list=list.filter(c=>c.nome.toLowerCase().includes(_colabFilter));
+  if(_colabObra)list=list.filter(c=>c.obraId===_colabObra);
+  if(_colabGestor){const obras=state.obras.filter(o=>o.gestorId===_colabGestor).map(o=>o.id);list=list.filter(c=>obras.includes(c.obraId));}
+  const tb=document.getElementById('tbody-colabs');
+  if(!list.length){tb.innerHTML='<tr><td colspan="9"><div class="empty-state"><p>Nenhum colaborador cadastrado</p></div></td></tr>';return;}
+  tb.innerHTML=list.map(c=>{
+    const s=certStatus(c.asoValid);
+    const cls=s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';
+    const txt=!c.asoValid?'—':s==='red'?'Vencido':s==='yellow'?'Vence em breve':'Válido';
     return `<tr>
       <td><strong style="color:var(--text)">${c.nome}</strong></td>
-      <td>${fmt(c.inicio)}</td>
-      <td>${c.inicio ? (() => { const d = new Date(c.inicio+'T00:00:00'); d.setFullYear(d.getFullYear()+1); const d2 = new Date(d); d2.setFullYear(d2.getFullYear()+1); return fmt(d.toISOString().split('T')[0])+' a '+fmt(d2.toISOString().split('T')[0]); })() : '—'}</td>
-      <td>${fmt(venc)}</td>
-      <td style="font-weight:600;color:${days===null?'var(--text3)':days<0?'var(--red)':days<=30?'var(--yellow)':'var(--green)'}">${days===null?'—':days<0?days+'d':'+'+days+'d'}</td>
+      <td>${c.cpf||'—'}</td>
+      <td>${getNome('funcoes',c.funcaoId)}</td>
+      <td>${getNome('obras',c.obraId)}</td>
+      <td>${getGestorByObra(c.obraId)}</td>
       <td><span class="status ${cls}">${txt}</span></td>
-    </tr>`;
+      <td>${fmt(c.inicio)}</td>
+      <td>${c.ultimaFerias?fmt(c.ultimaFerias):'<span style="color:var(--text3)">—</span>'}</td>
+      <td class="action-btns">
+        <button class="btn btn-outline btn-sm" onclick="editColab('${c.id}')">Editar</button>
+        <button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteColab('${c.id}')">Excluir</button>
+      </td></tr>`;
   }).join('');
 }
 
-// =====================
-// RENDER RELATORIO
-// =====================
-function renderRelatorio() {
+// ============================================================
+// RENDER OBRAS
+// ============================================================
+function renderObras(){
+  const tb=document.getElementById('tbody-obras');
+  if(!state.obras.length){tb.innerHTML='<tr><td colspan="6"><div class="empty-state"><p>Nenhuma obra cadastrada</p></div></td></tr>';return;}
+  tb.innerHTML=state.obras.map(o=>{
+    const count=state.colaboradores.filter(c=>c.obraId===o.id&&!c.desligamento).length;
+    const sm={ativa:'status-green',pausada:'status-yellow',concluida:'status-blue'};
+    return `<tr><td><strong style="color:var(--text)">${o.nome}</strong></td><td>${o.endereco||'—'}</td><td>${getNome('gestores',o.gestorId)}</td><td><span class="status ${sm[o.status]||'status-blue'}">${o.status||'ativa'}</span></td><td><span class="pill pill-blue">${count}</span></td><td class="action-btns"><button class="btn btn-outline btn-sm" onclick="editObra('${o.id}')">Editar</button><button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteObra('${o.id}')">Excluir</button></td></tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER GESTORES
+// ============================================================
+function renderGestores(){
+  const tb=document.getElementById('tbody-gestores');
+  if(!state.gestores.length){tb.innerHTML='<tr><td colspan="5"><div class="empty-state"><p>Nenhum gestor cadastrado</p></div></td></tr>';return;}
+  tb.innerHTML=state.gestores.map(g=>{
+    const obras=state.obras.filter(o=>o.gestorId===g.id).map(o=>o.nome).join(', ')||'—';
+    return `<tr><td><strong style="color:var(--text)">${g.nome}</strong></td><td>${g.email||'—'}</td><td>${g.tel||'—'}</td><td>${obras}</td><td class="action-btns"><button class="btn btn-outline btn-sm" onclick="editGestor('${g.id}')">Editar</button><button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteGestor('${g.id}')">Excluir</button></td></tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER FUNÇÕES
+// ============================================================
+function renderFuncoes(){
+  const tb=document.getElementById('tbody-funcoes');
+  if(!state.funcoes.length){tb.innerHTML='<tr><td colspan="4"><div class="empty-state"><p>Nenhuma função cadastrada</p></div></td></tr>';return;}
+  tb.innerHTML=state.funcoes.map(f=>`<tr><td><strong style="color:var(--text)">${f.nome}</strong></td><td>${f.desc||'—'}</td><td>${(f.nrs||[]).map(n=>`<span class="pill pill-orange">${n}</span>`).join(' ')||'—'}</td><td class="action-btns"><button class="btn btn-outline btn-sm" onclick="editFuncao('${f.id}')">Editar</button><button class="btn btn-sm" style="background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.2)" onclick="deleteFuncao('${f.id}')">Excluir</button></td></tr>`).join('');
+}
+
+// ============================================================
+// RENDER CERTIFICADOS
+// ============================================================
+let _certFilter='';
+function filterCerts(v){_certFilter=v.toLowerCase();renderCerts();}
+function renderCerts(){
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(_certFilter)list=list.filter(c=>c.nome.toLowerCase().includes(_certFilter));
+  const tb=document.getElementById('tbody-certs');
+  if(!list.length){tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><p>Nenhum colaborador</p></div></td></tr>';return;}
+  tb.innerHTML=list.map(c=>`<tr><td><strong style="color:var(--text)">${c.nome}</strong></td><td>${getNome('obras',c.obraId)}</td><td>${certLabel(c.nr33)}</td><td>${certLabel(c.nr35)}</td><td>${certLabel(c.irata)}</td><td>${certLabel(c.resgate)}</td><td><button class="btn btn-outline btn-sm" onclick="editColab('${c.id}')">Editar</button></td></tr>`).join('');
+}
+
+// ============================================================
+// RENDER ASO
+// ============================================================
+let _asoFilter='',_asoStatus='';
+function filterAso(v){_asoFilter=v.toLowerCase();renderAso();}
+function filterAsoStatus(v){_asoStatus=v;renderAso();}
+function renderAso(){
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(_asoFilter)list=list.filter(c=>c.nome.toLowerCase().includes(_asoFilter));
+  if(_asoStatus)list=list.filter(c=>{const s=certStatus(c.asoValid);return _asoStatus==='valido'?s==='green':_asoStatus==='vencer'?s==='yellow':s==='red';});
+  const tb=document.getElementById('tbody-aso');
+  if(!list.length){tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><p>Nenhum registro</p></div></td></tr>';return;}
+  tb.innerHTML=list.map(c=>{
+    const s=certStatus(c.asoValid);
+    const cls=s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';
+    const txt=!c.asoValid?'—':s==='red'?'Vencido':s==='yellow'?'Vence em breve':'Válido';
+    const d=c.asoValid?diffDays(c.asoValid):null;
+    return `<tr><td><strong style="color:var(--text)">${c.nome}</strong></td><td>${getNome('funcoes',c.funcaoId)}</td><td>${getNome('obras',c.obraId)}</td><td>${fmt(c.asoData)}</td><td>${fmt(c.asoValid)}</td><td><span class="status ${cls}">${txt}</span></td><td style="color:${d===null?'var(--text3)':d<0?'var(--red)':d<=30?'var(--yellow)':'var(--green)'};font-weight:600">${d===null?'—':d<0?d+'d':'+'+d+'d'}</td></tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER EPI
+// ============================================================
+let _epiFilter='';
+function filterEpi(v){_epiFilter=v.toLowerCase();renderEpi();}
+function getQuarter(ds){if(!ds)return null;return Math.floor(new Date(ds+'T00:00:00').getMonth()/3)+1;}
+function renderEpi(){
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(_epiFilter)list=list.filter(c=>c.nome.toLowerCase().includes(_epiFilter));
+  const tb=document.getElementById('tbody-epi');
+  if(!list.length){tb.innerHTML='<tr><td colspan="8"><div class="empty-state"><p>Nenhum colaborador</p></div></td></tr>';return;}
+  tb.innerHTML=list.map(c=>{
+    const epis=state.epis.filter(e=>e.colabId===c.id);
+    const byQ=[1,2,3,4].map(q=>epis.filter(e=>getQuarter(e.data)===q));
+    const sorted=epis.slice().sort((a,b)=>b.data.localeCompare(a.data));
+    const last=sorted[0];
+    const nextDate=last?(()=>{const d=new Date(last.data+'T00:00:00');d.setMonth(d.getMonth()+3);return d.toISOString().split('T')[0];})():null;
+    const nd=nextDate?diffDays(nextDate):null;
+    const nc=nd===null?'var(--text3)':nd<0?'var(--red)':nd<=14?'var(--yellow)':'var(--green)';
+    return `<tr><td><strong style="color:var(--text)">${c.nome}</strong></td><td>${getNome('obras',c.obraId)}</td><td>${last?last.nome:'—'}</td>${[0,1,2,3].map(i=>`<td>${byQ[i].length?`<span class="status status-green">${fmt(byQ[i][byQ[i].length-1].data)}</span>`:'<span style="color:var(--text3)">—</span>'}</td>`).join('')}<td style="color:${nc};font-weight:600">${nextDate?fmt(nextDate):'—'}</td></tr>`;
+  }).join('');
+}
+
+// ============================================================
+// RENDER FÉRIAS
+// ============================================================
+function renderFerias(){
   populateSelects();
-  const tipo = document.getElementById('rel-tipo').value;
-  const mes = document.getElementById('rel-mes').value;
-  const gestor = document.getElementById('rel-gestor').value;
-  const obra = document.getElementById('rel-obra').value;
-
-  let list = state.colaboradores.filter(c => !c.desligamento);
-  if (mes) list = list.filter(c => c.inicio && new Date(c.inicio+'T00:00:00').getMonth()+1 === parseInt(mes));
-  if (obra) list = list.filter(c => c.obraId === obra);
-  if (gestor) {
-    const obras = state.obras.filter(o => o.gestorId === gestor).map(o => o.id);
-    list = list.filter(c => obras.includes(c.obraId));
-  }
-
-  const thead = document.getElementById('rel-thead');
-  const tbody = document.getElementById('tbody-relatorio');
-
-  if (tipo === 'geral') {
-    thead.innerHTML = '<th>Nome</th><th>Função</th><th>Obra</th><th>Gestor</th><th>Início</th><th>ASO Status</th>';
-    tbody.innerHTML = list.map(c => {
-      const s = certStatus(c.asoValid);
-      const cls = s === 'red' ? 'status-red' : s === 'yellow' ? 'status-yellow' : 'status-green';
-      const txt = !c.asoValid ? '—' : s === 'red' ? 'Vencido' : s === 'yellow' ? 'Vence em breve' : 'Válido';
-      return `<tr><td>${c.nome}</td><td>${getNome('funcoes',c.funcaoId)}</td><td>${getNome('obras',c.obraId)}</td><td>${getGestorByObra(c.obraId)}</td><td>${fmt(c.inicio)}</td><td><span class="status ${cls}">${txt}</span></td></tr>`;
-    }).join('');
-  } else if (tipo === 'certif') {
-    thead.innerHTML = '<th>Nome</th><th>Obra</th><th>NR-33</th><th>NR-35</th><th>IRATA</th><th>Resgate</th>';
-    tbody.innerHTML = list.map(c => `<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${certLabel(c.nr33)}</td><td>${certLabel(c.nr35)}</td><td>${certLabel(c.irata)}</td><td>${certLabel(c.resgate)}</td></tr>`).join('');
-  } else if (tipo === 'epi') {
-    thead.innerHTML = '<th>Nome</th><th>Obra</th><th>Último EPI</th><th>Data Entrega</th><th>Próxima Entrega</th>';
-    tbody.innerHTML = list.map(c => {
-      const epis = state.epis.filter(e => e.colabId === c.id).sort((a,b) => b.data.localeCompare(a.data));
-      const last = epis[0];
-      const next = last ? (() => { const d = new Date(last.data+'T00:00:00'); d.setMonth(d.getMonth()+3); return d.toISOString().split('T')[0]; })() : null;
-      return `<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${last?last.nome:'—'}</td><td>${last?fmt(last.data):'—'}</td><td>${next?fmt(next):'—'}</td></tr>`;
-    }).join('');
-  } else if (tipo === 'aso') {
-    thead.innerHTML = '<th>Nome</th><th>Obra</th><th>Data ASO</th><th>Validade</th><th>Status</th><th>Dias</th>';
-    tbody.innerHTML = list.map(c => {
-      const s = certStatus(c.asoValid);
-      const cls = s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';
-      const d = c.asoValid ? diffDays(c.asoValid) : null;
-      return `<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${fmt(c.asoData)}</td><td>${fmt(c.asoValid)}</td><td><span class="status ${cls}">${!c.asoValid?'—':s==='red'?'Vencido':s==='yellow'?'Vence em breve':'Válido'}</span></td><td>${d===null?'—':d<0?d+'d':'+'+d+'d'}</td></tr>`;
-    }).join('');
-  }
-
-  if (!list.length) tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><p>Nenhum resultado</p></div></td></tr>`;
+  const mes=document.getElementById('filter-ferias-mes').value;
+  const obra=document.getElementById('filter-ferias-obra').value;
+  const gestor=document.getElementById('filter-ferias-gestor').value;
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(obra)list=list.filter(c=>c.obraId===obra);
+  if(gestor){const obras=state.obras.filter(o=>o.gestorId===gestor).map(o=>o.id);list=list.filter(c=>obras.includes(c.obraId));}
+  if(mes)list=list.filter(c=>{const v=calcVencFerias(c.inicio);if(!v)return false;return new Date(v+'T00:00:00').getMonth()+1===parseInt(mes);});
+  const tb=document.getElementById('tbody-ferias');
+  if(!list.length){tb.innerHTML='<tr><td colspan="7"><div class="empty-state"><p>Nenhum registro</p></div></td></tr>';return;}
+  tb.innerHTML=list.map(c=>{
+    const venc=calcVencFerias(c.inicio);
+    const d=venc?diffDays(venc):null;
+    const cls=d===null?'':d<0?'status-red':d<=30?'status-yellow':'status-green';
+    const txt=d===null?'—':d<0?'Vencido':d<=30?`Vence ${d}d`:'Válido';
+    return `<tr><td><strong style="color:var(--text)">${c.nome}</strong></td><td>${fmt(c.inicio)}</td><td>${c.feriasInicio?fmt(c.feriasInicio):'<span style="color:var(--text3)">—</span>'}</td><td>${c.feriasFim?fmt(c.feriasFim):'<span style="color:var(--text3)">—</span>'}</td><td>${fmt(venc)}</td><td style="font-weight:600;color:${d===null?'var(--text3)':d<0?'var(--red)':d<=30?'var(--yellow)':'var(--green)'}">${d===null?'—':d<0?d+'d':'+'+d+'d'}</td><td><span class="status ${cls}">${txt}</span></td></tr>`;
+  }).join('');
 }
 
-// =====================
-// RENDER ALERTAS
-// =====================
-function renderAlertas() {
-  const certAlerts = getCertAlerts();
-  const asoAlerts = getAsoAlerts();
-  const feriasAlerts = getFeriasAlerts();
-
-  const renderList = (id, items) => {
-    const el = document.getElementById(id);
-    if (!items.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);text-align:center;padding:12px">Sem alertas</div>'; return; }
-    el.innerHTML = items.map(i => `<div class="alert-item ${i.color}"><div class="alert-dot ${i.color}"></div><div><div style="font-weight:600;color:var(--text)">${i.name}</div><div style="font-size:12px;color:var(--text3)">${i.detail}</div></div></div>`).join('');
-  };
-  renderList('alert-cert-list', certAlerts);
-  renderList('alert-aso-list', asoAlerts);
-  renderList('alert-ferias-list', feriasAlerts);
+// ============================================================
+// RENDER RELATÓRIOS
+// ============================================================
+function renderRelatorio(){
+  populateSelects();
+  const tipo=document.getElementById('rel-tipo').value;
+  const mes=document.getElementById('rel-mes').value;
+  const gestor=document.getElementById('rel-gestor').value;
+  const obra=document.getElementById('rel-obra').value;
+  let list=state.colaboradores.filter(c=>!c.desligamento);
+  if(mes)list=list.filter(c=>c.inicio&&new Date(c.inicio+'T00:00:00').getMonth()+1===parseInt(mes));
+  if(obra)list=list.filter(c=>c.obraId===obra);
+  if(gestor){const obras=state.obras.filter(o=>o.gestorId===gestor).map(o=>o.id);list=list.filter(c=>obras.includes(c.obraId));}
+  const thead=document.getElementById('rel-thead');
+  const tbody=document.getElementById('tbody-relatorio');
+  if(tipo==='geral'){
+    thead.innerHTML='<th>Nome</th><th>CPF</th><th>Função</th><th>Obra</th><th>Gestor</th><th>Início</th><th>ASO</th>';
+    tbody.innerHTML=list.map(c=>{const s=certStatus(c.asoValid);const cls=s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';return `<tr><td>${c.nome}</td><td>${c.cpf||'—'}</td><td>${getNome('funcoes',c.funcaoId)}</td><td>${getNome('obras',c.obraId)}</td><td>${getGestorByObra(c.obraId)}</td><td>${fmt(c.inicio)}</td><td><span class="status ${cls}">${!c.asoValid?'—':s==='red'?'Vencido':s==='yellow'?'Vence em breve':'Válido'}</span></td></tr>`;}).join('');
+  }else if(tipo==='certif'){
+    thead.innerHTML='<th>Nome</th><th>Obra</th><th>NR-33</th><th>NR-35</th><th>IRATA</th><th>Resgate</th>';
+    tbody.innerHTML=list.map(c=>`<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${certLabel(c.nr33)}</td><td>${certLabel(c.nr35)}</td><td>${certLabel(c.irata)}</td><td>${certLabel(c.resgate)}</td></tr>`).join('');
+  }else if(tipo==='epi'){
+    thead.innerHTML='<th>Nome</th><th>Obra</th><th>Último EPI</th><th>Data Entrega</th><th>Próxima Entrega</th>';
+    tbody.innerHTML=list.map(c=>{const ep=state.epis.filter(e=>e.colabId===c.id).sort((a,b)=>b.data.localeCompare(a.data));const last=ep[0];const next=last?(()=>{const d=new Date(last.data+'T00:00:00');d.setMonth(d.getMonth()+3);return d.toISOString().split('T')[0];})():null;return `<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${last?last.nome:'—'}</td><td>${last?fmt(last.data):'—'}</td><td>${next?fmt(next):'—'}</td></tr>`;}).join('');
+  }else if(tipo==='aso'){
+    thead.innerHTML='<th>Nome</th><th>Obra</th><th>Data ASO</th><th>Validade</th><th>Status</th><th>Dias</th>';
+    tbody.innerHTML=list.map(c=>{const s=certStatus(c.asoValid);const cls=s==='red'?'status-red':s==='yellow'?'status-yellow':'status-green';const d=c.asoValid?diffDays(c.asoValid):null;return `<tr><td>${c.nome}</td><td>${getNome('obras',c.obraId)}</td><td>${fmt(c.asoData)}</td><td>${fmt(c.asoValid)}</td><td><span class="status ${cls}">${!c.asoValid?'—':s==='red'?'Vencido':s==='yellow'?'Vence em breve':'Válido'}</span></td><td>${d===null?'—':d<0?d+'d':'+'+d+'d'}</td></tr>`;}).join('');
+  }
+  if(!list.length)tbody.innerHTML='<tr><td colspan="10"><div class="empty-state"><p>Nenhum resultado</p></div></td></tr>';
 }
 
-function getCertAlerts() {
-  const alerts = [];
-  state.colaboradores.filter(c => !c.desligamento).forEach(c => {
-    [['NR-33', c.nr33], ['NR-35', c.nr35], ['IRATA', c.irata], ['Resgate', c.resgate]].forEach(([label, date]) => {
-      if (!date) return;
-      const d = diffDays(date);
-      if (d <= 30) alerts.push({ name: c.nome, detail: `${label} — ${d < 0 ? 'Vencido há ' + Math.abs(d) + ' dias' : 'Vence em ' + d + ' dias'}`, color: d < 0 ? 'red' : 'yellow' });
+// ============================================================
+// ALERTS
+// ============================================================
+function getCertAlerts(){
+  const alerts=[];
+  state.colaboradores.filter(c=>!c.desligamento).forEach(c=>{
+    [['NR-33',c.nr33],['NR-35',c.nr35],['IRATA',c.irata],['Resgate',c.resgate]].forEach(([label,date])=>{
+      if(!date)return;const d=diffDays(date);
+      if(d<=30)alerts.push({name:c.nome,detail:`${label} — ${d<0?'Vencido há '+Math.abs(d)+' dias':'Vence em '+d+' dias'}`,color:d<0?'red':'yellow'});
     });
   });
   return alerts;
 }
-
-function getAsoAlerts() {
-  const alerts = [];
-  state.colaboradores.filter(c => !c.desligamento && c.asoValid).forEach(c => {
-    const d = diffDays(c.asoValid);
-    if (d <= 30) alerts.push({ name: c.nome, detail: d < 0 ? 'ASO vencido há ' + Math.abs(d) + ' dias' : 'ASO vence em ' + d + ' dias', color: d < 0 ? 'red' : 'yellow' });
+function getAsoAlerts(){
+  const alerts=[];
+  state.colaboradores.filter(c=>!c.desligamento&&c.asoValid).forEach(c=>{
+    const d=diffDays(c.asoValid);
+    if(d<=30)alerts.push({name:c.nome,detail:d<0?'ASO vencido há '+Math.abs(d)+' dias':'ASO vence em '+d+' dias',color:d<0?'red':'yellow'});
+  });
+  return alerts;
+}
+function getFeriasAlerts(){
+  const alerts=[];
+  state.colaboradores.filter(c=>!c.desligamento&&c.inicio).forEach(c=>{
+    const v=calcVencFerias(c.inicio);const d=diffDays(v);
+    if(d<=30)alerts.push({name:c.nome,detail:d<0?'Férias vencidas há '+Math.abs(d)+' dias':'Férias vencem em '+d+' dias',color:d<0?'red':'blue'});
   });
   return alerts;
 }
 
-function getFeriasAlerts() {
-  const alerts = [];
-  state.colaboradores.filter(c => !c.desligamento && c.inicio).forEach(c => {
-    const venc = calcVencFerias(c.inicio);
-    const d = diffDays(venc);
-    if (d <= 30) alerts.push({ name: c.nome, detail: d < 0 ? 'Férias vencidas há ' + Math.abs(d) + ' dias' : 'Férias vencem em ' + d + ' dias', color: d < 0 ? 'red' : 'blue' });
-  });
-  return alerts;
-}
-
-// =====================
-// EMAIL ALERTS
-// =====================
-// =====================
-// CPF MASK
-// =====================
-function maskCPF(input) {
-  let v = input.value.replace(/\D/g, '').slice(0, 11);
-  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-  input.value = v;
-}
-
-// =====================
-// ALERT CONFIG SAVE
-// =====================
-function saveAlertConfig() {
-  const email = document.getElementById('email-rh').value;
-  const nome = document.getElementById('nome-rh').value;
-  const whats = document.getElementById('whats-rh').value;
-  try {
-    localStorage.setItem('rh_email', email);
-    localStorage.setItem('rh_nome', nome);
-    localStorage.setItem('rh_whats', whats);
-    showToast('Configurações salvas!');
-  } catch(e) { showToast('Configurações salvas na sessão', 'info'); }
-}
-
-function loadAlertConfig() {
-  try {
-    const email = localStorage.getItem('rh_email');
-    const nome = localStorage.getItem('rh_nome');
-    const whats = localStorage.getItem('rh_whats');
-    if (email) document.getElementById('email-rh').value = email;
-    if (nome) document.getElementById('nome-rh').value = nome;
-    if (whats) document.getElementById('whats-rh').value = whats;
-  } catch(e) {}
-}
-
-// =====================
-// EMAIL & WHATSAPP ALERTS
-// =====================
-function getAlertItems(type) {
-  if (type === 'cert') return getCertAlerts();
-  if (type === 'aso') return getAsoAlerts();
-  if (type === 'ferias') return getFeriasAlerts();
-  return [];
-}
-
-function getAlertTexts(type) {
-  const nomeRH = document.getElementById('nome-rh').value || 'Setor de RH';
-  const date = new Date().toLocaleDateString('pt-BR');
-  const items = getAlertItems(type);
-  const list = items.map(i => `• ${i.name}: ${i.detail}`).join('\n');
-  if (type === 'cert') return {
-    subject: `⚠️ Alerta: Certificações vencendo — ${date}`,
-    body: `Prezado(a) ${nomeRH},\n\nOs seguintes certificados estão vencidos ou vencem nos próximos 30 dias:\n\n${list}\n\nPor favor, tome as providências necessárias.\n\nAtenciosamente,\nAlpiend RH`,
-    items
+function renderAlertas(){
+  const renderList=(id,items)=>{
+    const el=document.getElementById(id);
+    if(!items.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);text-align:center;padding:12px">Sem alertas ✓</div>';return;}
+    el.innerHTML=items.map(i=>`<div class="alert-item ${i.color}"><div class="alert-dot ${i.color}"></div><div><div style="font-weight:600;color:var(--text)">${i.name}</div><div style="font-size:12px;color:var(--text3)">${i.detail}</div></div></div>`).join('');
   };
-  if (type === 'aso') return {
-    subject: `🏥 Alerta: ASO vencendo — ${date}`,
-    body: `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm ASO vencido ou vencendo nos próximos 30 dias:\n\n${list}\n\nPor favor, agende os exames necessários.\n\nAtenciosamente,\nAlpiend RH`,
-    items
-  };
-  if (type === 'ferias') return {
-    subject: `🏖️ Alerta: Férias vencendo — ${date}`,
-    body: `Prezado(a) ${nomeRH},\n\nOs seguintes colaboradores têm férias vencidas ou vencendo nos próximos 30 dias:\n\n${list}\n\nPor favor, programe as férias com antecedência.\n\nAtenciosamente,\nAlpiend RH`,
-    items
-  };
-  return { subject:'', body:'', items:[] };
+  renderList('alert-cert-list',getCertAlerts());
+  renderList('alert-aso-list',getAsoAlerts());
+  renderList('alert-ferias-list',getFeriasAlerts());
 }
 
-function sendAlertEmail(type) {
-  const emailRH = document.getElementById('email-rh').value;
-  if (!emailRH) { showToast('Configure o e-mail do RH primeiro!', 'error'); showPage('alertas'); return; }
-  const { subject, body, items } = getAlertTexts(type);
-  if (!items.length) { showToast('Nenhum alerta para enviar', 'info'); return; }
-  document.getElementById('email-preview-to').value = emailRH;
-  document.getElementById('email-preview-subject').value = subject;
-  document.getElementById('email-preview-body').textContent = body;
-  const mailto = `mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.getElementById('email-mailto-btn').href = mailto;
-  openModal('modal-email');
+function updateBadges(){
+  const cert=getCertAlerts().length,aso=getAsoAlerts().length,all=cert+aso+getFeriasAlerts().length;
+  document.getElementById('badge-cert').textContent=cert;
+  document.getElementById('badge-aso').textContent=aso;
+  document.getElementById('badge-alert').textContent=all;
 }
 
-function sendAlertWhats(type) {
-  const whatsRH = document.getElementById('whats-rh').value.replace(/\D/g,'');
-  if (!whatsRH) { showToast('Configure o WhatsApp do RH primeiro!', 'error'); return; }
-  const { body, items } = getAlertTexts(type);
-  if (!items.length) { showToast('Nenhum alerta para enviar', 'info'); return; }
-  const url = `https://wa.me/${whatsRH}?text=${encodeURIComponent(body)}`;
-  window.open(url, '_blank');
+// ============================================================
+// ALERT CONFIG (localStorage for settings only)
+// ============================================================
+function saveAlertConfig(){
+  try{localStorage.setItem('rh_email',document.getElementById('email-rh').value);localStorage.setItem('rh_nome',document.getElementById('nome-rh').value);localStorage.setItem('rh_whats',document.getElementById('whats-rh').value);showToast('Configurações salvas!');}catch(e){showToast('Salvo na sessão','info');}
+}
+function loadAlertConfig(){
+  try{const e=localStorage.getItem('rh_email'),n=localStorage.getItem('rh_nome'),w=localStorage.getItem('rh_whats');if(e)document.getElementById('email-rh').value=e;if(n)document.getElementById('nome-rh').value=n;if(w)document.getElementById('whats-rh').value=w;}catch(e){}
 }
 
-function sendAllAlerts(canal) {
-  const allItems = [...getCertAlerts(), ...getAsoAlerts(), ...getFeriasAlerts()];
-  if (!allItems.length) { showToast('Nenhum alerta pendente!', 'info'); return; }
-  const nomeRH = document.getElementById('nome-rh').value || 'Setor de RH';
-  const subject = `📋 Relatório de Alertas RH — ${new Date().toLocaleDateString('pt-BR')}`;
-  const body = `Relatório de Alertas — Alpiend RH\n\n${allItems.map(i=>`• ${i.name}: ${i.detail}`).join('\n')}\n\nAtenciosamente,\nAlpiend RH`;
-  if (canal === 'email') {
-    const emailRH = document.getElementById('email-rh').value;
-    if (!emailRH) { showToast('Configure o e-mail do RH primeiro!', 'error'); return; }
-    document.getElementById('email-preview-to').value = emailRH;
-    document.getElementById('email-preview-subject').value = subject;
-    document.getElementById('email-preview-body').textContent = body;
-    const mailto = `mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('email-mailto-btn').href = mailto;
-    openModal('modal-email');
-  } else {
-    const whatsRH = document.getElementById('whats-rh').value.replace(/\D/g,'');
-    if (!whatsRH) { showToast('Configure o WhatsApp do RH primeiro!', 'error'); return; }
-    window.open(`https://wa.me/${whatsRH}?text=${encodeURIComponent(body)}`, '_blank');
+function buildAlertText(type){
+  const nomeRH=document.getElementById('nome-rh').value||'Setor de RH';
+  const date=new Date().toLocaleDateString('pt-BR');
+  const maps={cert:{fn:getCertAlerts,subj:`⚠️ Certificações vencendo — ${date}`,intro:'Os seguintes certificados estão vencidos ou vencem em 30 dias:'},aso:{fn:getAsoAlerts,subj:`🏥 ASO vencendo — ${date}`,intro:'Os seguintes colaboradores têm ASO vencendo:'},ferias:{fn:getFeriasAlerts,subj:`🏖️ Férias vencendo — ${date}`,intro:'Os seguintes colaboradores têm férias vencendo:'}};
+  const m=maps[type];if(!m)return null;
+  const items=m.fn();
+  if(!items.length)return null;
+  const body=`Prezado(a) ${nomeRH},
+
+${m.intro}
+
+${items.map(i=>`• ${i.name}: ${i.detail}`).join('
+')}
+
+Atenciosamente,
+Alpiend — Gestão de Recursos Humanos`;
+  return {subject:m.subj,body,items};
+}
+
+function sendAlertEmail(type){
+  const emailRH=document.getElementById('email-rh').value;
+  if(!emailRH){showToast('Configure o e-mail do RH primeiro!','error');return;}
+  const r=buildAlertText(type);
+  if(!r){showToast('Nenhum alerta para enviar','info');return;}
+  document.getElementById('email-preview-to').value=emailRH;
+  document.getElementById('email-preview-subject').value=r.subject;
+  document.getElementById('email-preview-body').textContent=r.body;
+  document.getElementById('email-mailto-btn').href=`mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(r.subject)}&body=${encodeURIComponent(r.body)}`;
+  document.getElementById('modal-email').classList.add('open');
+}
+
+function sendAlertWhats(type){
+  const whats=document.getElementById('whats-rh').value.replace(/\D/g,'');
+  if(!whats){showToast('Configure o WhatsApp do RH primeiro!','error');return;}
+  const r=buildAlertText(type);
+  if(!r){showToast('Nenhum alerta para enviar','info');return;}
+  window.open(`https://wa.me/${whats}?text=${encodeURIComponent(r.body)}`,'_blank');
+}
+
+function sendAllAlerts(canal){
+  const all=[...getCertAlerts(),...getAsoAlerts(),...getFeriasAlerts()];
+  if(!all.length){showToast('Nenhum alerta pendente!','info');return;}
+  const nomeRH=document.getElementById('nome-rh').value||'Setor de RH';
+  const subj=`📋 Relatório de Alertas — ${new Date().toLocaleDateString('pt-BR')}`;
+  const body=`Prezado(a) ${nomeRH},
+
+Segue o relatório completo de alertas:
+
+${all.map(i=>`• ${i.name}: ${i.detail}`).join('
+')}
+
+Atenciosamente,
+Alpiend — Gestão de Recursos Humanos`;
+  if(canal==='email'){
+    const emailRH=document.getElementById('email-rh').value;
+    if(!emailRH){showToast('Configure o e-mail primeiro!','error');return;}
+    document.getElementById('email-preview-to').value=emailRH;
+    document.getElementById('email-preview-subject').value=subj;
+    document.getElementById('email-preview-body').textContent=body;
+    document.getElementById('email-mailto-btn').href=`mailto:${encodeURIComponent(emailRH)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+    document.getElementById('modal-email').classList.add('open');
+  }else{
+    const whats=document.getElementById('whats-rh').value.replace(/\D/g,'');
+    if(!whats){showToast('Configure o WhatsApp primeiro!','error');return;}
+    window.open(`https://wa.me/${whats}?text=${encodeURIComponent(body)}`,'_blank');
   }
 }
 
-// =====================
+// ============================================================
 // DASHBOARD
-// =====================
-function renderDashboard() {
-  const ativos = state.colaboradores.filter(c => !c.desligamento);
-  const desligados = state.colaboradores.filter(c => c.desligamento);
-  const obras = state.obras.filter(o => o.status === 'ativa');
-  const certAlerts = getCertAlerts();
-  const asoAlerts = getAsoAlerts();
-  const feriasAlerts = getFeriasAlerts();
-  const allAlerts = [...certAlerts, ...asoAlerts, ...feriasAlerts];
-
-  document.getElementById('kpi-total').textContent = ativos.length;
-  document.getElementById('kpi-obras').textContent = obras.length;
-  document.getElementById('kpi-alertas').textContent = allAlerts.length;
-  document.getElementById('kpi-cert').textContent = certAlerts.length;
-
-  // Dash alerts
-  const da = document.getElementById('dash-alerts');
-  if (!allAlerts.length) {
-    da.innerHTML = '<div class="empty-state" style="padding:20px"><p>✓ Sem alertas no momento</p></div>';
-  } else {
-    da.innerHTML = allAlerts.slice(0,6).map(a => `<div class="alert-item ${a.color}"><div class="alert-dot ${a.color}"></div><div><div style="font-weight:600;color:var(--text);font-size:13px">${a.name}</div><div style="font-size:12px;color:var(--text3)">${a.detail}</div></div></div>`).join('');
-  }
-
-  // Chart obras
-  const co = document.getElementById('chart-obras');
-  const obraCount = {};
-  ativos.forEach(c => { if (c.obraId) obraCount[c.obraId] = (obraCount[c.obraId]||0)+1; });
-  const maxC = Math.max(...Object.values(obraCount), 1);
-  co.innerHTML = Object.entries(obraCount).map(([id,cnt]) =>
-    `<div class="chart-row"><div class="label">${getNome('obras',id)}</div><div class="bar-bg"><div class="bar-fill" style="width:${(cnt/maxC*100).toFixed(0)}%"></div></div><div class="val">${cnt}</div></div>`
-  ).join('') || '<div style="font-size:13px;color:var(--text3);text-align:center;padding:20px">Sem dados</div>';
-
-  // Rotatividade KPI
-  const adm = ativos.length;
-  const desl = desligados.length;
-  const total = adm + desl || 1;
-  const taxa = Math.round((desl / total) * 100);
-  document.getElementById('stat-adm').textContent = adm;
-  document.getElementById('stat-desl').textContent = desl;
-  document.getElementById('ring-label').textContent = taxa + '%';
-  const circumference = 201;
-  document.getElementById('ring-fg').style.strokeDashoffset = circumference - (circumference * taxa / 100);
-  document.getElementById('ring-fg').style.stroke = taxa > 20 ? 'var(--red)' : taxa > 10 ? 'var(--yellow)' : 'var(--green)';
-
-  // ASO Status Chart
-  const asoEl = document.getElementById('aso-status-chart');
-  const asoGroups = { valido: 0, vencer: 0, vencido: 0 };
-  ativos.forEach(c => {
-    const s = certStatus(c.asoValid);
-    if (s === 'green') asoGroups.valido++;
-    else if (s === 'yellow') asoGroups.vencer++;
-    else if (s === 'red') asoGroups.vencido++;
-  });
-  const maxA = Math.max(...Object.values(asoGroups), 1);
-  asoEl.innerHTML = [
-    { label: 'Válido', val: asoGroups.valido, color: 'green' },
-    { label: 'Vence 30d', val: asoGroups.vencer, color: 'yellow' },
-    { label: 'Vencido', val: asoGroups.vencido, color: '' },
-  ].map(x => `<div class="chart-row"><div class="label">${x.label}</div><div class="bar-bg"><div class="bar-fill ${x.color}" style="width:${(x.val/maxA*100).toFixed(0)}%;${!x.color?'background:var(--red)':''}"></div></div><div class="val">${x.val}</div></div>`).join('');
-
-  // Próximas férias
-  const pf = document.getElementById('prox-ferias');
-  const fList = state.colaboradores.filter(c => !c.desligamento && c.inicio).map(c => {
-    const v = calcVencFerias(c.inicio); return { nome: c.nome, venc: v, d: diffDays(v) };
-  }).filter(x => x.d !== null && x.d <= 60 && x.d >= -30).sort((a,b) => a.d - b.d).slice(0,5);
-  if (!fList.length) {
-    pf.innerHTML = '<div class="empty-state" style="padding:10px"><p>Sem férias previstas</p></div>';
-  } else {
-    pf.innerHTML = fList.map(x => `<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span>${x.nome}</span><span style="color:${x.d<0?'var(--red)':x.d<=30?'var(--yellow)':'var(--green)'};font-weight:600;font-size:12px">${fmt(x.venc)}</span></div>`).join('');
-  }
-
+// ============================================================
+function renderDashboard(){
+  const ativos=state.colaboradores.filter(c=>!c.desligamento);
+  const desligados=state.colaboradores.filter(c=>c.desligamento);
+  document.getElementById('kpi-total').textContent=ativos.length;
+  document.getElementById('kpi-obras').textContent=state.obras.filter(o=>o.status==='ativa').length;
+  const allAlerts=[...getCertAlerts(),...getAsoAlerts(),...getFeriasAlerts()];
+  document.getElementById('kpi-alertas').textContent=allAlerts.length;
+  document.getElementById('kpi-cert').textContent=getCertAlerts().length;
+  const da=document.getElementById('dash-alerts');
+  da.innerHTML=allAlerts.length?allAlerts.slice(0,6).map(a=>`<div class="alert-item ${a.color}"><div class="alert-dot ${a.color}"></div><div><div style="font-weight:600;color:var(--text);font-size:13px">${a.name}</div><div style="font-size:12px;color:var(--text3)">${a.detail}</div></div></div>`).join(''):'<div class="empty-state" style="padding:20px"><p>✓ Sem alertas</p></div>';
+  const obraCount={};ativos.forEach(c=>{if(c.obraId)obraCount[c.obraId]=(obraCount[c.obraId]||0)+1;});
+  const maxC=Math.max(...Object.values(obraCount),1);
+  document.getElementById('chart-obras').innerHTML=Object.entries(obraCount).map(([id,cnt])=>`<div class="chart-row"><div class="label">${getNome('obras',id)}</div><div class="bar-bg"><div class="bar-fill" style="width:${(cnt/maxC*100).toFixed(0)}%"></div></div><div class="val">${cnt}</div></div>`).join('')||'<div style="font-size:13px;color:var(--text3);text-align:center;padding:20px">Sem dados</div>';
+  const taxa=Math.round((desligados.length/(ativos.length+desligados.length||1))*100);
+  document.getElementById('stat-adm').textContent=ativos.length;
+  document.getElementById('stat-desl').textContent=desligados.length;
+  document.getElementById('ring-label').textContent=taxa+'%';
+  const fg=document.getElementById('ring-fg');fg.style.strokeDashoffset=201-(201*taxa/100);fg.style.stroke=taxa>20?'var(--red)':taxa>10?'var(--yellow)':'var(--green)';
+  const ag={valido:0,vencer:0,vencido:0};ativos.forEach(c=>{const s=certStatus(c.asoValid);if(s==='green')ag.valido++;else if(s==='yellow')ag.vencer++;else if(s==='red')ag.vencido++;});
+  const maxA=Math.max(...Object.values(ag),1);
+  document.getElementById('aso-status-chart').innerHTML=[['Válido',ag.valido,'green'],['Vence 30d',ag.vencer,'yellow'],['Vencido',ag.vencido,'']].map(([l,v,cl])=>`<div class="chart-row"><div class="label">${l}</div><div class="bar-bg"><div class="bar-fill ${cl}" style="width:${(v/maxA*100).toFixed(0)}%;${!cl?'background:var(--red)':''}"></div></div><div class="val">${v}</div></div>`).join('');
+  const fList=ativos.filter(c=>c.inicio).map(c=>{const v=calcVencFerias(c.inicio);return {nome:c.nome,venc:v,d:diffDays(v)};}).filter(x=>x.d!==null&&x.d<=60&&x.d>=-30).sort((a,b)=>a.d-b.d).slice(0,5);
+  document.getElementById('prox-ferias').innerHTML=fList.length?fList.map(x=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">${x.nome}</span><span style="color:${x.d<0?'var(--red)':x.d<=30?'var(--yellow)':'var(--green)'};font-weight:600;font-size:12px">${fmt(x.venc)}</span></div>`).join(''):'<div class="empty-state" style="padding:10px"><p>Sem férias previstas</p></div>';
   updateBadges();
 }
 
-function updateBadges() {
-  const cert = getCertAlerts().length;
-  const aso = getAsoAlerts().length;
-  const all = cert + aso + getFeriasAlerts().length;
-  document.getElementById('badge-cert').textContent = cert;
-  document.getElementById('badge-aso').textContent = aso;
-  document.getElementById('badge-alert').textContent = all;
-}
-
-// =====================
-// HELPERS
-// =====================
-function getNome(type, id) {
-  if (!id) return '—';
-  const item = state[type]?.find(x => x.id === id);
-  return item ? item.nome : '—';
-}
-
-function getGestorByObra(obraId) {
-  const obra = state.obras.find(o => o.id === obraId);
-  if (!obra) return '—';
-  return getNome('gestores', obra.gestorId);
-}
-
-// =====================
+// ============================================================
 // EXPORT CSV
-// =====================
-function exportFerias() {
-  const rows = [['Nome','Início','Vencimento Férias','Dias']];
-  state.colaboradores.filter(c => !c.desligamento && c.inicio).forEach(c => {
-    const v = calcVencFerias(c.inicio);
-    rows.push([c.nome, c.inicio, v, diffDays(v)]);
-  });
-  downloadCSV(rows, 'ferias.csv');
-}
+// ============================================================
+function exportFerias(){const rows=[['Nome','Início','Início Férias','Fim Férias','Vencimento','Dias']];state.colaboradores.filter(c=>!c.desligamento&&c.inicio).forEach(c=>{const v=calcVencFerias(c.inicio);rows.push([c.nome,c.inicio,c.feriasInicio||'',c.feriasFim||'',v,diffDays(v)]);}); downloadCSV(rows,'ferias.csv');}
+function exportRelatorio(){const rows=[['Nome','Função','Obra','Início']];state.colaboradores.filter(c=>!c.desligamento).forEach(c=>{rows.push([c.nome,getNome('funcoes',c.funcaoId),getNome('obras',c.obraId),c.inicio]);});downloadCSV(rows,'relatorio.csv');}
+function downloadCSV(rows,filename){const csv=rows.map(r=>r.map(x=>`"${(x||'').toString().replace(/"/g,'""')}"`).join(',')).join('
+');const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();}
 
-function exportRelatorio() {
-  showToast('Exportando CSV...', 'info');
-  const rows = [['Nome','Função','Obra','Início']];
-  state.colaboradores.filter(c => !c.desligamento).forEach(c => {
-    rows.push([c.nome, getNome('funcoes',c.funcaoId), getNome('obras',c.obraId), c.inicio]);
-  });
-  downloadCSV(rows, 'relatorio.csv');
-}
-
-function downloadCSV(rows, filename) {
-  const csv = rows.map(r => r.map(x => `"${(x||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
-  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click();
-}
-
-// =====================
+// ============================================================
 // INIT
-// =====================
-document.getElementById('current-date').textContent = new Date().toLocaleDateString('pt-BR', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-document.getElementById('topbar-btn').style.display = 'none';
+// ============================================================
+document.getElementById('current-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
-});
-
-// Init flatpickr on all date inputs
-function initDatePickers() {
-  document.querySelectorAll('input[type="date"]').forEach(el => {
-    el.type = 'text';
-    el.placeholder = 'DD/MM/AAAA';
-    flatpickr(el, {
-      locale: 'pt',
-      dateFormat: 'Y-m-d',
-      altInput: true,
-      altFormat: 'd/m/Y',
-      allowInput: true,
-      disableMobile: true,
-    });
-  });
-}
-
-// Re-init date pickers when modal opens
-const _origOpenModal = openModal;
-function openModal(id) {
-  _origOpenModal(id);
-  setTimeout(initDatePickers, 50);
-}
-
-// Carrega do Supabase e renderiza
-(async () => {
+(async()=>{
   loadAlertConfig();
   await loadAll();
   populateSelects();
   renderDashboard();
   updateBadges();
-  initDatePickers();
 })();
 </script>
 </body>
