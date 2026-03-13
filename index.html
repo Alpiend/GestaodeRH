@@ -556,12 +556,26 @@ tr:last-child td{border-bottom:none;}
 // ============================================================
 const SUPA_URL = 'https://vfwgiaebfhpgttlkgwge.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmd2dpYWViZmhwZ3R0bGtnd2dlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNzQ5NzYsImV4cCI6MjA4ODg1MDk3Nn0.N27X0O6cTiofOI3km4zUSPcPSeao0TNs6tfifgldaYA';
-const H = {'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Prefer':'return=representation'};
+const _BASE = {'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY};
 
-async function sbGet(t,q=''){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?order=created_at.asc${q}`,{headers:H});if(!r.ok)throw await r.text();return r.json();}
-async function sbInsert(t,d){const r=await fetch(`${SUPA_URL}/rest/v1/${t}`,{method:'POST',headers:HP,body:JSON.stringify(d)});if(!r.ok)throw await r.text();return r.json();}
-async function sbUpdate(t,id,d){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:{...H,'Prefer':'return=minimal'},body:JSON.stringify(d)});if(!r.ok)throw await r.text();}
-async function sbDelete(t,id){const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:H});if(!r.ok)throw await r.text();}
+async function sbGet(t,q=''){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${t}?order=created_at.asc${q}`,{headers:_BASE});
+  if(!r.ok)throw await r.text();
+  return r.json();
+}
+async function sbInsert(t,d){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${t}`,{method:'POST',headers:{..._BASE,'Prefer':'return=representation'},body:JSON.stringify(d)});
+  if(!r.ok)throw await r.text();
+  return r.json();
+}
+async function sbUpdate(t,id,d){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:{..._BASE,'Prefer':'return=minimal'},body:JSON.stringify(d)});
+  if(!r.ok)throw await r.text();
+}
+async function sbDelete(t,id){
+  const r=await fetch(`${SUPA_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:_BASE});
+  if(!r.ok)throw await r.text();
+}
 
 // ============================================================
 // STATE
