@@ -230,7 +230,7 @@ tr:last-child td{border-bottom:none;}
   <div class="page" id="pg-ferias">
     <div class="sh"><h2>Férias</h2><button class="btn bo" onclick="exportFerias()">Exportar CSV</button></div>
     <div style="background:rgba(14,165,233,.08);border:1px solid rgba(14,165,233,.2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)">
-      ℹ️ <b style="color:var(--accent)">Cálculo automático:</b> Vencimento = Data de Início + 1 ano. Status fica <b style="color:var(--red)">vermelho</b> se vencido, <b style="color:var(--yellow)">amarelo</b> se vence em 30 dias, <b style="color:var(--green)">verde</b> se em dia.
+      ℹ️ <b style="color:var(--accent)">Cálculo automático:</b> Vencimento = Última Férias + 1 ano. Status fica <b style="color:var(--red)">vermelho</b> se vencido, <b style="color:var(--yellow)">amarelo</b> se vence em 30 dias, <b style="color:var(--green)">verde</b> se em dia. Colaboradores sem data de última férias não aparecem aqui.
     </div>
     <div class="fbar">
       <div><label>Obra</label><select id="fil-fer-obra" onchange="renderFerias()"><option value="">Todas</option></select></div>
@@ -238,7 +238,7 @@ tr:last-child td{border-bottom:none;}
       <div><label>Status</label><select id="fil-fer-st" onchange="renderFerias()"><option value="">Todos</option><option value="ok">Em dia</option><option value="aviso">Vence 30d</option><option value="venc">Vencido</option></select></div>
     </div>
     <div class="card"><div class="tw"><table>
-      <thead><tr><th>Colaborador</th><th>Obra</th><th>Início</th><th>Início Férias</th><th>Fim Férias</th><th>Vencimento</th><th>Dias</th><th>Status</th></tr></thead>
+      <thead><tr><th>Colaborador</th><th>Obra</th><th>Início Contrato</th><th>Última Férias</th><th>Vencimento</th><th>Dias p/ Vencer</th><th>Status</th></tr></thead>
       <tbody id="tb-ferias"></tbody>
     </table></div></div>
   </div>
@@ -300,10 +300,11 @@ tr:last-child td{border-bottom:none;}
         <div class="fg"><label>Resgate Validade</label><input type="date" id="c-resgate"></div>
       </div>
       <div class="fdiv">Férias</div>
-      <div class="fgrid3">
-        <div class="fg"><label>Última Férias</label><input type="date" id="c-ult-ferias"></div>
-        <div class="fg"><label>Início das Férias</label><input type="date" id="c-fer-inicio"></div>
-        <div class="fg"><label>Fim das Férias</label><input type="date" id="c-fer-fim"></div>
+      <div style="background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.15);border-radius:7px;padding:10px 12px;margin-bottom:8px;font-size:11px;color:var(--text2)">
+        ℹ️ Informe a data da <b>última vez que o colaborador tirou férias</b>. O vencimento é calculado automaticamente (+ 1 ano).
+      </div>
+      <div class="fgrid">
+        <div class="fg"><label>Data da Última Férias</label><input type="date" id="c-ult-ferias"></div>
       </div>
       <div class="fdiv">Desligamento</div>
       <div class="fgrid"><div class="fg"><label>Data de Desligamento</label><input type="date" id="c-deslig"></div></div>
@@ -515,9 +516,10 @@ function gestorObra(oId) {
   var o = S.obras.find(function(x){ return x.id == oId; });
   return o ? nome('gest', o.gestor_id) : '—';
 }
-function vencFerias(ini) {
-  if (!ini) return null;
-  var iso = toISO(ini);
+function vencFerias(ultFerias) {
+  // Vencimento = ultima_ferias + 1 ano
+  if (!ultFerias) return null;
+  var iso = toISO(ultFerias);
   if (!iso) return null;
   var d = new Date(iso + 'T00:00:00');
   if (isNaN(d)) return null;
@@ -884,20 +886,20 @@ function renderFerias() {
   var obra = document.getElementById('fil-fer-obra').value;
   var gest = document.getElementById('fil-fer-gestor').value;
   var st   = document.getElementById('fil-fer-st').value;
-  var list = S.col.filter(function(c){ return !c.desligamento && c.inicio; });
+  var list = S.col.filter(function(c){ return !c.desligamento && c.ultima_ferias; });
   if (obra) list = list.filter(function(c){ return c.obra_id==obra; });
   if (gest) {
     var obs = S.obras.filter(function(o){ return o.gestor_id==gest; }).map(function(o){ return o.id; });
     list = list.filter(function(c){ return obs.indexOf(c.obra_id)>=0; });
   }
-  if (st) list = list.filter(function(c){ return stData(vencFerias(c.inicio))==st; });
+  if (st) list = list.filter(function(c){ return stData(vencFerias(c.ultima_ferias))==st; });
   var tb = document.getElementById('tb-ferias');
-  if (!list.length) { tb.innerHTML = '<tr><td colspan="8"><div class="empty">Nenhum registro</div></td></tr>'; return; }
+  if (!list.length) { tb.innerHTML = '<tr><td colspan="6"><div class="empty">Nenhum colaborador com data de última férias cadastrada</div></td></tr>'; return; }
   tb.innerHTML = list.map(function(c) {
-    var v=vencFerias(c.inicio), d=dias(v), s=stData(v);
+    var v=vencFerias(c.ultima_ferias), d=dias(v), s=stData(v);
     var cl=s==='venc'?'sr':s==='aviso'?'sy':'sg', tx=s==='venc'?'Vencido':s==='aviso'?'Vence em breve':'Em dia';
     var cor=d===null?'var(--text3)':d<0?'var(--red)':d<=30?'var(--yellow)':'var(--green)';
-    return '<tr><td><b style="color:var(--text)">'+c.nome+'</b></td><td>'+nome('obras',c.obra_id)+'</td><td>'+fmt(c.inicio)+'</td><td>'+(c.ferias_inicio?fmt(c.ferias_inicio):'—')+'</td><td>'+(c.ferias_fim?fmt(c.ferias_fim):'—')+'</td><td>'+fmt(v)+'</td><td style="font-weight:700;color:'+cor+'">'+(d===null?'—':d<0?d+'d':'+'+d+'d')+'</td><td><span class="st '+cl+'">'+tx+'</span></td></tr>';
+    return '<tr><td><b style="color:var(--text)">'+c.nome+'</b></td><td>'+nome('obras',c.obra_id)+'</td><td>'+fmt(c.inicio)+'</td><td>'+fmt(c.ultima_ferias)+'</td><td>'+fmt(v)+'</td><td style="font-weight:700;color:'+cor+'">'+(d===null?'—':d<0?d+'d':'+'+d+'d')+'</td><td><span class="st '+cl+'">'+tx+'</span></td></tr>';
   }).join('');
 }
 
@@ -923,8 +925,8 @@ function alAso() {
 }
 function alFer() {
   var r = [];
-  S.col.filter(function(c){ return !c.desligamento && c.inicio; }).forEach(function(c) {
-    var v = vencFerias(c.inicio), n = dias(v);
+  S.col.filter(function(c){ return !c.desligamento && c.ultima_ferias; }).forEach(function(c) {
+    var v = vencFerias(c.ultima_ferias), n = dias(v);
     if (n !== null && n <= 30) r.push({nome:c.nome, det:'Férias — '+(n<0?'Vencido '+Math.abs(n)+'d':'Vence '+n+'d'), cor:n<0?'red':'blue'});
   });
   return r;
@@ -978,8 +980,8 @@ function renderDash() {
     '<div class="bar-row"><div class="bar-lbl">Válido</div><div class="bar-bg"><div class="bar-fill bg" style="width:'+Math.round(ok/mx*100)+'%"></div></div><div class="bar-val">'+ok+'</div></div>'+
     '<div class="bar-row"><div class="bar-lbl">Vence 30d</div><div class="bar-bg"><div class="bar-fill by" style="width:'+Math.round(av/mx*100)+'%"></div></div><div class="bar-val">'+av+'</div></div>'+
     '<div class="bar-row"><div class="bar-lbl">Vencido</div><div class="bar-bg"><div class="bar-fill br" style="width:'+Math.round(ve/mx*100)+'%"></div></div><div class="bar-val">'+ve+'</div></div>';
-  var fer = ativos.filter(function(c){ return c.inicio; }).map(function(c){
-    return {nome:c.nome, v:vencFerias(c.inicio), d:dias(vencFerias(c.inicio))};
+  var fer = ativos.filter(function(c){ return c.ultima_ferias; }).map(function(c){
+    return {nome:c.nome, v:vencFerias(c.ultima_ferias), d:dias(vencFerias(c.ultima_ferias))};
   }).filter(function(x){ return x.d!==null && x.d>=-30 && x.d<=60; }).sort(function(a,b){ return a.d-b.d; }).slice(0,5);
   document.getElementById('dash-ferias').innerHTML = fer.length ? fer.map(function(x) {
     var cor = x.d<0?'var(--red)':x.d<=30?'var(--yellow)':'var(--green)';
