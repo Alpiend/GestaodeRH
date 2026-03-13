@@ -708,15 +708,16 @@ async function salvarColab() {
       savedId = res[0] ? res[0].id : null;
     }
 
-    // Salvar campos de férias separadamente (ignora erro se colunas não existirem)
+    // Salvar campos de férias separadamente
     if (savedId) {
       try {
         await PATCH('colaboradores', savedId, df);
+        if (df.ultima_ferias) toast('Férias salvas: ' + fmt(df.ultima_ferias));
       } catch(ef) {
-        console.warn('Aviso campos férias:', ef.message);
+        toast('Dados salvos, mas erro nas férias: ' + ef.message, 'err');
+        console.error('Erro campos ferias:', ef.message);
       }
     }
-
     toast(id ? 'Colaborador atualizado!' : 'Colaborador cadastrado!');
     fecharModal('mo-colab');
     await loadAll(); renderColabs(); updateBadges();
@@ -1052,10 +1053,10 @@ function enviarTudo(canal) {
   }
 }
 function exportFerias() {
-  var rows = [['Nome','Obra','Início','Início Férias','Fim Férias','Vencimento','Dias','Status']];
-  S.col.filter(function(c){ return !c.desligamento && c.inicio; }).forEach(function(c) {
-    var v=vencFerias(c.inicio), d=dias(v), s=stData(v);
-    rows.push([c.nome, nome('obras',c.obra_id), c.inicio, c.ferias_inicio||'', c.ferias_fim||'', v||'', d===null?'':d, s==='venc'?'Vencido':s==='aviso'?'Vence em breve':'Em dia']);
+  var rows = [['Nome','Obra','Início Contrato','Última Férias','Vencimento','Dias','Status']];
+  S.col.filter(function(c){ return !c.desligamento && c.ultima_ferias; }).forEach(function(c) {
+    var v=vencFerias(c.ultima_ferias), d=dias(v), s=stData(v);
+    rows.push([c.nome, nome('obras',c.obra_id), c.inicio, c.ultima_ferias||'', v||'', d===null?'':d, s==='venc'?'Vencido':s==='aviso'?'Vence em breve':'Em dia']);
   });
   var csv = rows.map(function(r){ return r.map(function(x){ return '"'+String(x||'').replace(/"/g,'""')+'"'; }).join(','); }).join('\n');
   var a = document.createElement('a');
